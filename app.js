@@ -1,1948 +1,1647 @@
-const items = [
+/* =============================================================
+   그그그그 그 뭐였더라 - app.js
+   완전한 사물 아카이브 애플리케이션
+   ============================================================= */
+
+'use strict';
+
+// ─────────────────────────────────────────────────────────────
+// 1. DATA — 50 objects
+// ─────────────────────────────────────────────────────────────
+const ITEMS = [
   {
-    id: "bread_tie",
-    name: "빵끈",
-    officialName: "트위스트 타이 (Twist Tie)",
+    id: 1,
+    name: "피자 세이버",
+    official: "피자 세이버 (Pizza Saver)",
+    description: "피자를 피자 상자에 담아 배달할 때, 피자의 열기로 상자 뚜껑이 내려앉아 피자에 들러붙는 것을 막기 위해 피자 가운데에 꽂는 세 발 달린 작은 플라스틱 지지대입니다.\n\n1985년 Carmela Vitale이 특허를 취득했으며, 배달 피자가 일상화된 이후 전 세계적으로 쓰이게 되었습니다.",
+    tags: ["피자", "배달", "삼발이", "플라스틱", "지지대"],
     category: "kitchen",
-    image: "assets/bread_tie.png",
-    description: "식빵이나 빵 봉지 등을 밀봉할 때 흔히 사용하는, 플라스틱이나 종이 내부에 얇은 철사가 들어있는 끈입니다. 모양을 쉽게 변형할 수 있어 케이블 정리나 공예용으로도 널리 쓰입니다.",
-    tags: ["빵", "철사", "식빵", "묶는거", "철사끈", "포장"],
-    pos: { x: 10, y: 15 },
-    size: 130,
-    rotation: 15,
-    otherDesigns: [
-      {
-        image: "assets/bread_tie.png",
-        officialName: "골드 트위스트 타이 (기본형)",
-        description: "가장 클래식한 철사 내장형 골드 컬러 플라스틱 트위스트 타이입니다. 유연하고 변형이 쉬우며 단단히 고정됩니다."
-      },
-      {
-        image: "assets/bread_tie_alt1.png",
-        officialName: "무지개 메탈릭 타이",
-        description: "다양한 메탈릭 색상 피막을 입혀 화려하게 포장할 수 있도록 만든 트위스트 타이입니다. 주로 선물 포장이나 파티 데코용으로 많이 쓰입니다."
-      },
-      {
-        image: "assets/bread_tie_alt2.png",
-        officialName: "내추럴 종이 타이",
-        description: "철사 겉면을 플라스틱 대신 재생 종이로 감싸 친환경적인 느낌을 주는 타이입니다. 베이커리나 수제 과자 포장에 자연스러운 멋을 더해줍니다."
-      },
-      {
-        image: "assets/bread_tie_alt3.png",
-        officialName: "클립형 케이블 루프",
-        description: "한 번 묶으면 고정이 잘 되며, 손쉽게 다시 풀 수 있도록 설계된 원형 플라스틱 및 철사 혼합 형태의 마감용 케이블 루프입니다."
-      }
-    ]
+    image: "assets/1_pizza.jpg",
+    hint: "배달 피자 상자 안에 꽂혀 있는 세 발 달린 작은 플라스틱"
   },
   {
-    id: "egg_carton",
-    name: "계란 판 / 계란 곽",
-    officialName: "난갑 (Egg Carton / Egg Tray)",
+    id: 2,
+    name: "트위스트 타이",
+    official: "트위스트 타이 (Twist Tie)",
+    description: "식빵 봉지나 비닐봉지 입구를 꼬아 묶는 데 쓰이는 얇고 유연한 끈입니다. 얇은 금속 철심을 종이나 플라스틱 피복으로 감싸 만들며, 색깔로 식품 유통 날짜(제조 요일)를 구분하는 데도 사용됩니다.",
+    tags: ["식빵", "봉지", "묶기", "철심", "꼬기", "주방"],
     category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "달걀이 깨지지 않도록 충격을 흡수하도록 디자인된 홈이 파여 있는 용기입니다. 주로 투명한 플라스틱(PET)이나 재생 펄프(종이) 재질로 만들어집니다.",
-    tags: ["계란", "달걀", "통", "플라스틱", "판", "곽", "껍데기"],
-    pos: { x: 30, y: 10 },
-    size: 210,
-    rotation: 12,
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "펄프 난갑 (기본형)",
-        description: "재생 종이 펄프로 만들어진 클래식한 30구 계란 판입니다. 습기 조절과 충격 흡수 능력이 탁월합니다."
-      },
-      {
-        image: "assets/egg_carton_alt1.png",
-        officialName: "친환경 재생종이 6구 팩",
-        description: "재생 펄프를 압착하여 만든 소량 포장용 6구 계란 상자입니다. 뚜껑이 일체형으로 디자인되어 유통과 보관이 편리하고 환경에 무해합니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "펄프 난갑 (디자인 C)",
-        description: "습기 보존과 충격 방지에 우수한 친환경 펄프 재질의 계란 전용 트레이입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "펄프 난갑 (디자인 D)",
-        description: "달걀의 크기와 신선도를 안전하게 유지해주는 견고한 격자형 계란 판 구조입니다."
-      }
-    ]
+    image: "assets/2_twist.png",
+    hint: "식빵 봉지 입구를 꼬아 막는 금속 심 내장 작은 끈"
   },
   {
-    id: "ship_helm",
-    name: "배 키 / 배 운전대",
-    officialName: "타륜 (Helm / Ship's Wheel)",
+    id: 3,
+    name: "라바콘",
+    official: "트래픽 콘 (Traffic Cone)",
+    description: "도로 공사 구간, 주차 차단 구역, 사고 현장 등에서 차량 통행을 유도하고 보행자 접근을 막기 위해 길에 세워두는 주황색 원뿔 모양의 고무 고깔입니다.\n\n반사 테이프가 붙어 야간에도 잘 보이며, 속이 비어 가벼우므로 바람에 넘어지기 쉬운 단점이 있습니다.",
+    tags: ["도로", "라바콘", "원뿔", "안전", "공사", "주차", "주황"],
     category: "misc",
-    image: "assets/ship_helm.png",
-    description: "선박의 방향타를 조종하여 배의 진행 방향을 바꾸는 바퀴 모양의 장치입니다. 클래식한 목재 바퀴 디자인에 황동 장식이 들어간 모습이 대표적입니다.",
-    tags: ["배", "운전대", "선장", "키", "바퀴", "바다"],
-    pos: { x: 74, y: 12 },
-    size: 190,
-    rotation: 10,
-    otherDesigns: [
-      {
-        image: "assets/ship_helm.png",
-        officialName: "클래식 목재 타륜 (기본형)",
-        description: "선박의 방향타를 조종하여 배의 진행 방향을 바꾸는 바퀴 모양의 장치입니다. 클래식한 목재 바퀴 디자인에 황동 장식이 들어간 모습이 대표적입니다."
-      },
-      {
-        image: "assets/ship_helm.png",
-        officialName: "목재 타륜 (디자인 B)",
-        description: "클래식 선박의 고유한 조타륜 디자인으로, 8개의 살과 튼튼한 중앙 허브를 가집니다."
-      },
-      {
-        image: "assets/ship_helm.png",
-        officialName: "목재 타륜 (디자인 C)",
-        description: "원목 핸들 그립이 적용되어 빈티지한 느낌을 자아내는 목조 보트 조타 키입니다."
-      },
-      {
-        image: "assets/ship_helm.png",
-        officialName: "목재 타륜 (디자인 D)",
-        description: "오래된 범선이나 복고풍 인테리어 장식에 널리 쓰이는 정통 타륜 스타일 조타 장치입니다."
-      }
-    ]
+    image: "assets/3_traffic.png",
+    hint: "공사장 앞에 세워두는 주황 고깔 모양 고무 도로 표지"
   },
   {
-    id: "paper_shreds",
-    name: "선물 상자 종이 스타핑",
-    officialName: "페이퍼 슈레드 / 스타핑 (Paper Shreds)",
+    id: 4,
+    name: "십 스틱",
+    official: "커피 스터러 / 십 스틱 (Coffee Sip Stick)",
+    description: "카페에서 뜨거운 테이크아웃 커피를 주문하면 꽂아주는, 두 개의 아주 좁은 통로가 나란히 붙어 있는 얇고 납작한 빨대 겸용 젓개입니다.\n\n구멍이 극히 좁아 음료가 한 번에 너무 많이 들어와 혀를 데는 것을 방지하며, 동시에 음료를 저을 수도 있습니다.",
+    tags: ["커피", "빨대", "카페", "두구멍", "젓개", "테이크아웃"],
+    category: "kitchen",
+    image: "assets/4_sipstick.png",
+    hint: "커피숍 뜨거운 음료에 꽂아주는 두 구멍짜리 납작 빨대"
+  },
+  {
+    id: 5,
+    name: "빵끈 클립",
+    official: "퀵록 (Kwiklock / Bread Clip)",
+    description: "식빵이나 과자 봉지 입구를 집어 고정하는 납작한 플라스틱 걸쇠입니다. 색깔로 유통 날짜를 구분하기도 하며, 발명가 Floyd Paxton의 이름에서 따 '퀵록'이라고도 부릅니다.\n\n납작하고 작아 쓰레기로 나오는 경우가 많지만, 케이블 정리나 냉장고 재료 표기 등 다양하게 재활용됩니다.",
+    tags: ["식빵", "봉지", "클립", "걸쇠", "플라스틱", "마감"],
+    category: "kitchen",
+    image: "assets/5_breadclip.png",
+    hint: "식빵 봉지 입구에 끼워 고정하는 작고 납작한 플라스틱"
+  },
+  {
+    id: 6,
+    name: "잠복소",
+    official: "잠복소 / 나무 짚 허리띠 (Winter Tree Banding)",
+    description: "가을철 가로수 줄기 아래쪽에 허리띠처럼 둘러 묶어두는 짚으로 만든 거적입니다.\n\n겨울에 추위를 피해 벌레들이 짚 밑으로 기어들어가 산란하게 한 뒤, 이듬해 봄에 짚을 떼어내 불태움으로써 해충을 방제하는 전통 친환경 방제 도구입니다.",
+    tags: ["나무", "가로수", "짚", "겨울", "해충", "벌레", "보호"],
+    category: "misc",
+    image: "assets/6_jambokso.png",
+    hint: "가로수 허리를 짚으로 둘러싼 해충 유인·방제 장치"
+  },
+  {
+    id: 7,
+    name: "네메스",
+    official: "네메스 (Nemes Headdress)",
+    description: "고대 이집트 파라오들이 왕권과 태양신을 상징하기 위해 머리에 썼던 줄무늬 천 두건입니다.\n\n투탕카멘 황금가면의 머리 양옆으로 늘어진 파란색과 금색 줄무늬 천이 바로 네메스입니다. 이집트 예술에서 파라오 묘사 시 가장 자주 등장하는 머리 장식 중 하나입니다.",
+    tags: ["이집트", "파라오", "두건", "투탕카멘", "왕관", "줄무늬"],
+    category: "misc",
+    image: "assets/7_nemyss.png",
+    hint: "투탕카멘 황금가면에서 볼 수 있는 줄무늬 이집트 두건"
+  },
+  {
+    id: 8,
+    name: "애드벌룬",
+    official: "애드벌룬 (Advertising Balloon / Blimp)",
+    description: "아파트 모델하우스나 매장 오픈 행사 시 하늘에 띄워 멀리서도 보이게 하는 대형 광고용 풍선입니다.\n\n하단에 매단 현수막에 전화번호나 광고 문구를 인쇄해 두며, 헬륨 또는 수소 가스로 부풀립니다.",
+    tags: ["풍선", "하늘", "광고", "행사", "대형", "오픈"],
+    category: "misc",
+    image: "assets/8_adballoon.png",
+    hint: "부동산 분양 현장에서 하늘 위에 띄워두는 대형 광고 풍선"
+  },
+  {
+    id: 9,
+    name: "몰리 가드",
+    official: "몰리 가드 (Molly Guard)",
+    description: "중요한 서버 전원 스위치나 기계 비상 정지 버튼을 실수로 누르지 못하도록 씌워두는 투명한 플라스틱 또는 금속 보호 덮개입니다.\n\n이름의 유래는, 어떤 회사의 꼬마 딸 '몰리'가 자꾸 서버실에 들어와 비상 전원을 누르는 바람에 덮개를 만들었다는 일화에서 비롯되었습니다.",
+    tags: ["스위치", "덮개", "방지", "보호", "안전", "서버"],
     category: "office",
-    image: "assets/paper_shreds.png",
-    description: "선물 상자나 포장 상자 내부에 물건이 흔들리거나 파손되는 것을 막기 위해 가득 채워 넣는 꼬불꼬불한 종이 완충재입니다. 다양한 색상이 있어 데코용으로도 사용됩니다.",
-    tags: ["선물", "상자", "종이", "완충재", "포장", "완충", "스타핑"],
-    pos: { x: 24, y: 45 },
-    size: 190,
-    rotation: 0,
-    otherDesigns: [
-      {
-        image: "assets/paper_shreds.png",
-        officialName: "지그재그 페이퍼 스타핑 (기본형)",
-        description: "선물 상자나 포장 상자 내부에 물건이 흔들리거나 파손되는 것을 막기 위해 가득 채워 넣는 꼬불꼬불한 종이 완충재입니다. 다양한 색상이 있어 데코용으로도 사용됩니다."
-      },
-      {
-        image: "assets/paper_shreds.png",
-        officialName: "페이퍼 슈레드 (디자인 B)",
-        description: "선물의 미관을 높이고 물건의 흔들림을 완벽하게 방지하는 쿠션용 페이퍼 완충재입니다."
-      },
-      {
-        image: "assets/paper_shreds.png",
-        officialName: "페이퍼 슈레드 (디자인 C)",
-        description: "선물 포장의 공간을 메우며 자연스러운 쿠션감을 제공하는 지그재그 종이 스타핑입니다."
-      },
-      {
-        image: "assets/paper_shreds.png",
-        officialName: "페이퍼 슈레드 (디자인 D)",
-        description: "포장의 퀄리티를 한 단계 높여주는 가볍고 다채로운 색감의 종이 완충 필러입니다."
-      }
-    ]
+    image: "assets/9_mollyguard.png",
+    hint: "비상 스위치를 실수로 누르지 못하도록 씌워두는 투명 덮개"
   },
   {
-    id: "pizza_saver",
-    name: "피자 삼발이 / 피자 고정핀",
-    officialName: "피자 세이버 (Pizza Saver)",
-    category: "kitchen",
-    image: "assets/pizza_saver.png",
-    description: "피자 배달 중 상자 뚜껑이 피자의 치즈와 토핑에 눌러붙거나 가라앉는 것을 방지하기 위해 피자 한가운데에 꽂아두는 플라스틱 지지대입니다. 1983년 카멜라 비탈레(Carmela Vitale)가 발명했습니다.",
-    tags: ["피자", "삼발이", "플라스틱", "지지대", "가운데", "고정"],
-    pos: { x: 60, y: 40 },
-    size: 160,
-    rotation: -15,
-    otherDesigns: [
-      {
-        image: "assets/pizza_saver.png",
-        officialName: "3발 피자 세이버 (기본형)",
-        description: "피자 배달 중 상자 뚜껑이 피자의 치즈와 토핑에 눌러붙거나 가라앉는 것을 방지하기 위해 피자 한가운데에 꽂아두는 플라스틱 지지대입니다."
-      },
-      {
-        image: "assets/pizza_saver_alt1.png",
-        officialName: "사각 4발 피자 세이버",
-        description: "지지력을 더 높이기 위해 4개의 다리와 사각형 상판 구조로 설계된 피자 세이버입니다. 대형 피자나 토핑이 무거운 시카고 피자 등에 유용합니다."
-      },
-      {
-        image: "assets/pizza_saver.png",
-        officialName: "3발 피자 세이버 (디자인 C)",
-        description: "피자 뚜껑과의 마찰을 고르게 분산하여 배달 중 형태가 무너지는 것을 완벽히 방지하는 핀입니다."
-      },
-      {
-        image: "assets/pizza_saver.png",
-        officialName: "3발 피자 세이버 (디자인 D)",
-        description: "일반적으로 널리 쓰이는 흰색 플라스틱 재질의 삼발이 고정용 피자 세이버 구조입니다."
-      }
-    ]
-  },
-  {
-    id: "thatch_roll",
-    name: "짚 말이 / 미니 울타리",
-    officialName: "김발 (Makisu) 또는 장식용 대나무발",
+    id: 10,
+    name: "문 핑거 가드",
+    official: "도어 핑거 가드 (Door Finger Guard)",
+    description: "문틈에 손가락이 끼이는 사고를 막기 위해 문 경첩 쪽에 붙이는 C자형 고무나 폼 소재의 쿠션 보호대입니다.\n\n주로 어린이 안전사고 예방을 위해 유치원, 어린이집, 학교 등에서 많이 사용됩니다.",
+    tags: ["문", "손가락", "안전", "어린이", "쿠션", "보호"],
     category: "misc",
-    image: "assets/thatch_roll.png",
-    description: "초밥이나 김밥 등을 동그랗게 말 때 사용하는 대나무로 만든 발입니다. 혹은 요리 장식(쯔마)이나 미니 정원 조경용의 작은 짚/나무 울타리로도 쓰입니다.",
-    tags: ["김밥", "말이", "대나무", "발", "울타리", "나무", "짚"],
-    pos: { x: 12, y: 72 },
-    size: 160,
-    rotation: -30,
-    otherDesigns: [
-      {
-        image: "assets/thatch_roll.png",
-        officialName: "대나무 김발 (기본형)",
-        description: "초밥이나 김밥 등을 동그랗게 말 때 사용하는 대나무로 만든 발입니다. 혹은 요리 장식(쯔마)이나 미니 정원 조경용의 작은 짚/나무 울타리로도 쓰입니다."
-      },
-      {
-        image: "assets/thatch_roll.png",
-        officialName: "대나무 김발 (디자인 B)",
-        description: "얇은 대나무 살들을 실로 촘촘히 엮어 만든 김밥 조리 필수 보조 도구입니다."
-      },
-      {
-        image: "assets/thatch_roll.png",
-        officialName: "대나무 김발 (디자인 C)",
-        description: "일정한 힘을 고르게 전달하여 음식의 모양을 동그랗게 잡아주는 조리 도구입니다."
-      },
-      {
-        image: "assets/thatch_roll.png",
-        officialName: "대나무 김발 (디자인 D)",
-        description: "친환경 대나무 재질로 음식이 달라붙지 않고 손쉽게 마감할 수 있는 롤링 발입니다."
-      }
-    ]
+    image: "assets/10_doorguard.png",
+    hint: "문틈에 손가락이 끼이지 않도록 문 가장자리에 붙이는 C형 쿠션"
   },
   {
-    id: "sea_mine",
-    name: "가시 달린 바다 폭탄",
-    officialName: "기뢰 (Naval Mine / Sea Mine)",
-    category: "misc",
-    image: "assets/sea_mine.png",
-    description: "물속에 설치하여 함선이 접근하거나 접촉했을 때 폭발하도록 만든 자동 폭발식 무기입니다. 외부에 솟아있는 돌기(촉각)에 부딪치면 내부 신관이 작동하여 터집니다.",
-    tags: ["폭탄", "바다", "가시", "기뢰", "철구", "군사"],
-    pos: { x: 45, y: 70 },
-    size: 170,
-    rotation: 0,
-    otherDesigns: [
-      {
-        image: "assets/sea_mine.png",
-        officialName: "촉각식 계류기뢰 (기본형)",
-        description: "물속에 설치하여 함선이 접근하거나 접촉했을 때 폭발하도록 만든 자동 폭발식 무기입니다. 외부에 솟아있는 돌기(촉각)에 부딪치면 내부 신관이 작동하여 터집니다."
-      },
-      {
-        image: "assets/sea_mine.png",
-        officialName: "계류기뢰 (디자인 B)",
-        description: "특유의 가시 달린 구형 철골 구조로 수중에 고정되어 선박을 격침시키는 고전식 기뢰입니다."
-      },
-      {
-        image: "assets/sea_mine.png",
-        officialName: "계류기뢰 (디자인 C)",
-        description: "바다 속 깊이에 따라 체인을 이용해 계류해 놓는 충격 격침용 해상 무기입니다."
-      },
-      {
-        image: "assets/sea_mine.png",
-        officialName: "계류기뢰 (디자인 D)",
-        description: "해군 작전 및 항만 방어에 주로 사용되는 파괴력이 강력한 자동 폭발 장치입니다."
-      }
-    ]
-  },
-  {
-    id: "sushi_grass",
-    name: "초밥 초록색 플라스틱 풀",
-    officialName: "바란 (Baran / Sushi Grass)",
-    category: "kitchen",
-    image: "assets/sushi_grass.png",
-    description: "초밥이나 일본식 도시락(벤토)에서 음식 간에 냄새가 섞이거나 마르는 것을 막고, 시각적인 장식을 위해 끼워 넣는 인조 플라스틱 풀 장식입니다. 원래는 엽란이라는 실제 식물 잎을 잘라 썼던 것에서 유래했습니다.",
-    tags: ["초밥", "도시락", "풀", "초록색", "플라스틱", "바란", "장식"],
-    pos: { x: 66, y: 72 },
-    size: 200,
-    rotation: -8,
-    otherDesigns: [
-      {
-        image: "assets/sushi_grass.png",
-        officialName: "플라스틱 인조 바란 (기본형)",
-        description: "초밥이나 일본식 도시락(벤토)에서 음식 간에 냄새가 섞이거나 마르는 것을 막고, 시각적인 장식을 위해 끼워 넣는 인조 플라스틱 풀 장식입니다."
-      },
-      {
-        image: "assets/sushi_grass.png",
-        officialName: "인조 바란 (디자인 B)",
-        description: "음식물 사이를 위생적으로 구분해주며 산뜻한 데코레이션 효과를 주는 초록색 인조 바란입니다."
-      },
-      {
-        image: "assets/sushi_grass.png",
-        officialName: "인조 바란 (디자인 C)",
-        description: "초밥이나 롤 포장 등에서 간장이나 반찬의 섞임을 효과적으로 막아주는 구획 장식입니다."
-      },
-      {
-        image: "assets/sushi_grass.png",
-        officialName: "인조 바란 (디자인 D)",
-        description: "일본 전통 도시락 문화에서 유래하여 음식의 고유한 향 및 수분을 보존하는 데 쓰이는 장치입니다."
-      }
-    ]
-  },
-  {
-    id: "garland",
-    name: "갈랜드",
-    officialName: "가랜드 / 갈랜드 (Garland)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "캠핑장이나 홈파티, 크리스마스 때 밋밋한 벽이나 천장에 줄을 길게 늘어뜨려 아기자기하게 장식하는 깃발 또는 꽃줄입니다.",
-    tags: ["파티", "장식", "캠핑", "줄", "깃발", "축제", "이벤트"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "삼각 플래그 가랜드",
-        description: "가장 흔히 볼 수 있는 삼각 깃발 모양의 패브릭 가랜드입니다. 홈파티나 캠핑장 텐트 장식용으로 널리 사용됩니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "조명 펠트 가랜드",
-        description: "펠트 재질과 귀여운 캐릭터에 LED 미니 전구를 매치하여 야간에 아늑한 인테리어 효과를 주는 가랜드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "플라워 꽃줄 갈랜드",
-        description: "조화나 말린 꽃을 엮어 문이나 거울 위에 장식하도록 만든 빈티지 스타일의 꽃 갈랜드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "태슬 가랜드",
-        description: "다채로운 색상의 실을 뭉쳐 만든 술(Tassel)을 줄줄이 엮어 실내 공간에 따뜻하고 포근한 느낌을 주는 데코 가랜드입니다."
-      }
-    ]
-  },
-  {
-    id: "honey_dipper",
-    name: "꿀봉 / 꿀 스푼",
-    officialName: "허니 디퍼 (Honey Dipper)",
-    category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "꿀을 흘리지 않고 깔끔하게 퍼서 빵이나 차에 얹을 수 있도록 머리 부분에 깊고 둥근 홈들이 파여 있는 나무 막대 모양의 도구입니다.",
-    tags: ["꿀", "스푼", "나무막대", "시럽", "소재", "주방"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "원목 클래식 허니 디퍼",
-        description: "올리브나무나 단풍나무를 깎아 만든 가장 전통적인 형태의 친환경 목제 꿀 스푼입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "실리콘 허니 디퍼",
-        description: "헤드 부분을 위생적이고 세척이 편리한 식품용 실리콘으로 제작하여 관리가 용이한 모던 디퍼입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "나선형 유리 꿀봉",
-        description: "투명한 유리나 아크릴로 꼬아 만든 디자인으로 꿀병에 꽂아두면 아름다운 주방 데코가 되는 유리 디퍼입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "미니 꿀 스틱",
-        description: "1인용 홍차잔이나 작은 수제 꿀병에 쏙 들어가는 앙증맞은 크기의 미니 소형 나무 디퍼입니다."
-      }
-    ]
-  },
-  {
-    id: "measuring_doe",
-    name: "되 / 됫박",
-    officialName: "되 / 됫박 (Korean Traditional Rice Measure)",
-    category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "과거 시장이나 가정에서 쌀, 콩 등 곡물이나 액체의 양을 잴 때 기준이 되었던 나무로 만든 사각형 또는 원기둥 모양의 전통 계량 용기입니다. 1되(약 1.8리터) 단위로 쓰였습니다.",
-    tags: ["쌀", "되", "됫박", "측정", "곡식", "전통", "홉", "말"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "전통 목제 사각 됫박",
-        description: "나무판을 정교하게 맞추고 모서리에 쇠를 덧대어 만든 튼튼하고 예스러운 한국 정통 사각 되입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "현대 플라스틱 쌀되",
-        description: "쌀통에 넣어두고 간편하게 1인분 분량을 계량할 수 있도록 투명 플라스틱으로 만든 계량컵 형태의 되입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "황동제 둥근 되",
-        description: "액체나 가루를 좀 더 정확히 측정하기 위해 구리나 황동으로 원기둥처럼 제작한 전통 금속 계량컵입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "대형 1말 나무통",
-        description: "10되에 해당하는 분량(1말, 약 18리터)을 대용량으로 측정할 수 있도록 튼튼한 나무판과 쇠 테두리로 엮은 대형 말통입니다."
-      }
-    ]
-  },
-  {
-    id: "winnowing_ki",
-    name: "키",
-    officialName: "키 (Winnowing Fan / Ki)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "곡식을 올려놓고 위아래로 까불러서 바람을 이용해 찌꺼기나 껍질은 날려 보내고 알곡만 남기는 전통 도구입니다. 옛날에 밤에 오줌을 싼 아이에게 머리에 씌우고 이웃집에 소금을 얻으러 가게 하던 풍습으로 유명합니다.",
-    tags: ["곡물", "시골", "전통", "오줌", "소금", "도구", "대나무", "까부르기"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "대나무 엮음 전통 키",
-        description: "대나무나 싸리나무를 촘촘히 엮어 앞이 트이고 뒤가 둥글넓적하게 만든 고전적인 농가용 키입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "장식용 미니 키",
-        description: "벽면 인테리어나 명절 소품 등으로 활용할 수 있도록 아주 작게 축소해 만든 민속 공예용 키입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "합성수지 플라스틱 키",
-        description: "나무 재질의 부식을 방지하고 세척이 쉽도록 가볍고 질긴 플라스틱으로 똑같이 사출 제작한 농업용 키입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "대형 싸리 키",
-        description: "바람을 이용해 한 번에 많은 양의 곡식을 걸러낼 수 있도록 튼튼한 싸리나무를 두껍게 엮어 만든 키입니다."
-      }
-    ]
-  },
-  {
-    id: "silage_bale",
-    name: "곤포 사일리지 / 마시멜로",
-    officialName: "곤포 사일리지 (Bale Silage)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "가을철 추수가 끝난 논 위에서 흔히 볼 수 있는, 목초나 볏짚을 둥글게 뭉쳐 흰색 비닐로 꽁꽁 싸맨 사료용 발효 덩어리입니다. 거대한 마시멜로나 롤케이크를 논에 흩뿌려놓은 듯한 귀여운 풍경을 연출합니다.",
-    tags: ["논", "마시멜로", "볏짚", "흰색", "사료", "농사", "비닐", "시골"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "라운드 흰색 곤포",
-        description: "수분 보존과 젖산 발효를 돕기 위해 흰색 비닐 필름을 겹겹이 래핑한 가장 일반적인 원통형 볏짚 곤포입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "친환경 녹색 곤포",
-        description: "자연 풍경과의 조화를 고려하고 재생 원료를 섞어 만든 은은한 녹색 비닐 래핑 사일리지입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "대형 사각 사일리지",
-        description: "트랙터 운반과 창고 적재가 매우 용이하도록 네모반듯하게 압축하여 묶어둔 사각 블록형 사일리지입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "미닐 래핑 목초 롤",
-        description: "목초지가 넓은 해외나 가축 사료용 알팔파 등을 비닐 없이 그물망(Net)으로만 둥글게 감싸 건조 보관하는 목초 롤입니다."
-      }
-    ]
-  },
-  {
-    id: "fruit_tray",
-    name: "과일 난좌 / 과일 포장재",
-    officialName: "과일 난좌 (Fruit Tray / Cushioning Pad)",
-    category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "사과, 배, 복숭아 등 충격에 약한 과일들이 유통 과정에서 멍들거나 손상되지 않도록 개별적으로 과일을 안착시킬 수 있는 둥근 홈이 규칙적으로 파여 있는 포장 패드입니다.",
-    tags: ["과일", "포장", "받침", "사과", "배", "완충재", "보호"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "핑크 스티로폼 개별 난좌",
-        description: "배나 사과 개별 겉면에 그물망처럼 폭신하게 씌우는 폴리에틸렌 발포제 재질의 분홍빛 캡형 난좌입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "재생 펄프 다구 과일 판",
-        description: "대용량 과일 박스 하단에 깔아 여러 개의 과일을 고르게 고정해주는 친환경 펄프 재질의 격자형 과일 트레이입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "PET 투명 플라스틱 과일 팩",
-        description: "방울토마토나 블루베리, 딸기 등을 담아 신선하게 유통할 수 있는 개폐식 투명 플라스틱 포장 팩입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "보라색 발포 과일 트레이",
-        description: "고급 과일 선물 세트의 밑바닥을 깔아 고급스러운 대조를 보여주는 탄성 있는 색상 난좌 패드입니다."
-      }
-    ]
-  },
-  {
-    id: "road_bollard",
-    name: "볼라드 / 길가 말뚝",
-    officialName: "볼라드 (Bollard)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "자동차 진입을 억제하고 보행자의 안전을 보호하기 위해 인도와 차도 경계 구역이나 횡단보도 앞 등에 설치한 짧고 튼튼한 말뚝 형태의 시설물입니다.",
-    tags: ["말뚝", "인도", "차선", "안전", "주차", "기둥", "길거리"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "석제 클래식 원주형 볼라드",
-        description: "대리석이나 화강암을 깎아 만들어 아주 견고하나 충돌 시 차량과 보행자 모두 큰 충격을 받는 고전적인 석제 말뚝입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "탄성 우레탄 안전 볼라드",
-        description: "기둥 내부에 스프링이 들어있거나 고탄성 우레탄 고무로 만들어 충돌 시 휘어지며 부상을 최소화하는 주황색 안전 볼라드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "스텐 볼 체인 자동 볼라드",
-        description: "스테인리스 스틸 재질로 반사 띠가 둘러져 있으며 필요 시 땅 밑으로 들어가 통행을 허용하는 자동 리프팅 볼라드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "예술 조형 디자인 볼라드",
-        description: "도시 미관을 위해 조각품이나 벤치, 화분 등의 형태로 예쁘게 디자인하여 다용도로 쓰이는 하이브리드 볼라드입니다."
-      }
-    ]
-  },
-  {
-    id: "nail_filer",
-    name: "네일 파일러 / 손톱 사포",
-    officialName: "네일 파일 / 에메리 보드 (Nail File / Emery Board)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "손톱이나 발톱을 깎은 후 거칠어진 절단면을 부드럽고 둥글게 갈아내거나 모양을 예쁘게 정돈하기 위해 사용하는 양면에 미세한 사포(파일)가 부착된 미용 도구입니다.",
-    tags: ["손톱", "발톱", "네일", "사포", "뷰티", "정리", "미용"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "종이 에메리 보드",
-        description: "단단한 종이 판 양면에 세밀함이 다른 사포 가루를 입혀 만든 저렴하고 가벼운 일회용 및 일반 네일 샵용 파일입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "메탈 다이아몬드 네일 파일",
-        description: "금속 판 겉면에 다이아몬드 연마 입자를 도포하여 영구적으로 튼튼하게 쓸 수 있고 가죽 집이 딸린 고급 파일입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "투명 크리스탈 글라스 파일",
-        description: "유리 재질 표면에 미세한 에칭 가공을 하여 손톱 손상을 줄이고 표면 광택까지 낼 수 있는 위생적인 유리 파일입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "다기능 4단 버퍼 파일",
-        description: "손톱 표면 정리, 굴곡 제거, 부드럽게 만들기, 광택 내기 등 4가지 면으로 나뉘어 단계별로 쓰는 두꺼운 블록 파일입니다."
-      }
-    ]
-  },
-  {
-    id: "lash_tab",
-    name: "래쉬 탭 / 백팩 돼지코",
-    officialName: "래쉬 탭 (Lash Tab / Pig Snout)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "클래식 아웃도어 백팩이나 캐주얼 가방 겉면에 붙어 있는 구멍 두 개 뚫린 다이아몬드 가죽/플라스틱 패치입니다. 원래는 야외 활동 시 카라비너나 끈을 끼워 장비를 매다는 고정 장치입니다.",
-    tags: ["가방", "백팩", "돼지코", "디자인", "가죽", "캠핑", "패치"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "정통 천연가죽 돼지코 패치",
-        description: "전통 등산 배낭의 멋을 살리기 위해 두꺼운 소가죽으로 튼튼하게 박음질된 다이아몬드 디자인 패치입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "현대 플라스틱 고무 래쉬 탭",
-        description: "수분에 강하고 마찰력이 뛰어난 우레탄이나 고무 합성수지로 제작되어 카라비너 고정이 쉬운 아웃도어 전용 탭입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "원형 미니 가방 포인트",
-        description: "여성용 가방이나 파우치 등에 장식 포인트로 사용하기 위해 크기를 대폭 줄인 부드러운 인조가죽 와펜입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "하네스 확장용 듀얼 탭",
-        description: "전문 등산용 배낭의 바닥이나 측면에 여러 개 부착되어 텐트나 침낭을 외부로 묶어 고정할 수 있게 해주는 기능성 탭입니다."
-      }
-    ]
-  },
-  {
-    id: "sushi_baran",
-    name: "바란 / 도시락 플라스틱 풀",
-    officialName: "바란 (Baran / Sushi Grass)",
-    category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "도시락의 반찬이나 초밥 사이를 격리하여 위생적이고 시각적인 장식 효과를 주는 가느다란 톱니 모양의 녹색 인조 플라스틱 장식입니다.",
-    tags: ["도시락", "초밥", "풀", "초록색", "플라스틱", "장식", "칸막이"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "플라스틱 인조 바란",
-        description: "도시락이나 반찬 팩에 널리 쓰이는 가장 대중적인 투명감 있는 초록색 인조 플라스틱 바란입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "엽란 나뭇잎 바란",
-        description: "고급 일식집에서 실제 신선한 잎사귀를 가위로 정교하게 잘라 조리사의 솜씨를 뽐내는 천연 친환경 잎 바란입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "국화 문양 장식 바란",
-        description: "초밥 접시나 연회용 음식을 더욱 화려하게 꾸미기 위해 꽃 모양으로 타공 가공된 특수 바란입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "은박 호일 바란",
-        description: "수분을 단단히 막기 위해 얇은 호일 표면에 녹색 코팅을 하여 반찬이나 간장의 침범을 완벽히 차단하는 실드 바란입니다."
-      }
-    ]
-  },
-  {
-    id: "shoelace_aglet",
-    name: "애글릿 / 신발끈 마감",
-    officialName: "애글릿 (Aglet)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "신발끈이나 후드 티셔츠 조임끈의 양쪽 끝부분을 감싸고 있는 플라스틱 또는 금속 재질의 얇은 튜브 형태 마감재입니다. 끈 끝이 풀어지는 것을 방지하고 구멍에 끈을 쉽게 끼울 수 있도록 돕습니다.",
-    tags: ["신발끈", "끝", "마감", "튜브", "플라스틱", "쇠붙이", "옷끈"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "클래식 플라스틱 열수축 애글릿",
-        description: "끈 끝부분에 플라스틱 필름을 감싼 후 열을 가해 딱딱하게 밀착시킨 가장 흔한 형태의 투명/검은색 애글릿입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "빈티지 황동 금속 애글릿",
-        description: "스트리트 웨어나 포멀한 운동화의 퀄리티를 한 단계 높이기 위해 금속 나사식이나 압착식으로 마감한 묵직한 구리빛 애글릿입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "실리콘 침지 팁 마감",
-        description: "애글릿 대신 특수 액상 실리콘에 신발끈 끝을 담근 뒤 건조시켜 유연하면서도 절대 깨지지 않게 만든 현대식 마감입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "브랜드 로고 음각 컬러 애글릿",
-        description: "알루미늄 팁 표면에 비비드한 컬러 도색과 브랜드 로고를 레이저 각인하여 디자인 포인트를 부각시킨 스페셜 애글릿입니다."
-      }
-    ]
-  },
-  {
-    id: "okchundang",
-    name: "옥춘당 / 제사 사탕",
-    officialName: "옥춘당 (Okchundang / Korean Ceremonial Candy)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "한국의 전통 제사상이나 잔칫상에 괴어 올리는, 흰 바탕에 알록달록한 빨간색, 초록색 동심원 무늬가 화려하게 칠해진 둥글넓적한 모양의 전통 쌀가루 설탕 사탕입니다.",
-    tags: ["제사", "제사상", "사탕", "알사탕", "전통", "무지개", "동그라미"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "제사용 오색 옥춘당",
-        description: "멥쌀가루와 설탕을 섞어 반죽한 후 겉에 식용 색소로 띠를 두르고 탑처럼 높이 쌓을 수 있게 동글넓적하게 굳힌 정통 옥춘당입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "잔치용 대형 화분 옥춘",
-        description: "혼례나 환갑잔치 등 경사스러운 날의 큰상 차림을 장식하기 위해 지름이 20cm가 넘도록 아주 크게 제작된 잔치용 옥춘입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "현대 미니 간식 옥춘",
-        description: "현대인들이 간식으로 한입에 먹기 편하도록 작은 크기로 잘게 잘라 유리병에 담아 파는 뉴트로 스타일 캔디입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "개별 비닐 포장 옥춘",
-        description: "보관 중 수분을 흡수해 끈적해지거나 녹아내리지 않도록 플라스틱 필름으로 위생 포장한 보관용 옥춘당입니다."
-      }
-    ]
-  },
-  {
-    id: "party_confetti",
-    name: "컨페티 / 꽃가루 종이 조각",
-    officialName: "컨페티 (Confetti)",
-    category: "office",
-    image: "assets/egg_carton.png",
-    description: "축제나 결혼식, 생일 파티 등에서 공중에 뿌려 축하 분위기를 극대화하거나 다이어리를 꾸밀 때 사용하는 오색찬란하고 아주 작은 종이 또는 필름 조각들입니다.",
-    tags: ["파티", "종이", "조각", "축제", "뿌리는거", "장식", "다꾸"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "멀티 컬러 원형 컨페티",
-        description: "가장 널리 쓰이는 가벼운 습식 종이로 만든 형형색색의 둥근 모양 꽃가루 조각입니다. 천천히 낙하합니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "메탈릭 스팽글 컨페티",
-        description: "빛을 받으면 화려하게 반사되어 무대나 클럽 연출에 탁월한 은박, 금박 필름 재질의 반짝이 컨페티입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "다이어리 데코용 스티커 컨페티",
-        description: "다이어리 꾸미기(다꾸)용으로 개발되어 하나씩 떼어 수첩에 붙일 수 있는 길고 얇은 리본형 필름 스티커입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "에어 캐논 방출용 컨페티",
-        description: "축제 엔딩 때 대형 송풍기로 하늘 높이 수천 장씩 날리기 위해 정전기 방지 처리가 된 대용량 매트 컨페티입니다."
-      }
-    ]
-  },
-  {
-    id: "bookmark_ribbon",
-    name: "가름끈 / 책갈피 끈",
-    officialName: "북마크 가름끈 / 서표 (Bookmark Ribbon)",
-    category: "office",
-    image: "assets/egg_carton.png",
-    description: "책을 읽다 멈춘 부분이나 중요한 페이지를 나중에 쉽게 찾을 수 있도록 책 제본용 등 부분에 길게 연결하여 책장 사이에 끼워두는 얇은 리본 형태의 천 끈입니다.",
-    tags: ["책", "끈", "북마크", "독서", "리본", "표시", "책갈피"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "클래식 새틴 가름끈",
-        description: "다이어리나 양장본 도서에 주로 사용되는 부드럽고 은은한 광택을 내는 실크나 나일론 재질의 단색 리본끈입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "고급 가죽 레이스 가름끈",
-        description: "두꺼운 성경책이나 고급 하드커버 노트에 품격을 더하기 위해 얇게 켠 갈색 천연 가죽 소재의 끈입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "멀티 듀얼 가름끈",
-        description: "참고 문헌이 많은 전공 서적이나 플래너를 위해 색상이 다른 2~3개의 리본 줄을 하나로 묶어 결합해 둔 가름끈입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "태슬 장식 펜던트 가름끈",
-        description: "끈 끝부분에 책 밖으로 늘어지도록 주석 펜던트나 실 태슬 장식을 달아 미적 가치를 높인 프리미엄 북마크 끈입니다."
-      }
-    ]
-  },
-  {
-    id: "wrapping_cutter",
-    name: "실링칼 / 배달 랩칼",
-    officialName: "랩 커터 / 실링칼 (Wrapping Cutter / Mini Plastic Knife)",
-    category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "배달 떡볶이, 족발 등 비닐 팩으로 밀봉 포장된 플라스틱 용기를 뜯을 때 비닐막을 슥 그어 쉽게 뜯을 수 있도록 동봉해 주는 아주 작고 귀여운 새 모양 또는 갈고리 모양의 미니 플라스틱 커터입니다.",
-    tags: ["배달", "비닐", "칼", "플라스틱", "포장", "배달음식", "커터"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "갈고리 새 부리형 랩칼",
-        description: "가장 많이 동봉되는 형태의 플라스틱 사출 칼로, 안쪽에 날카로운 돌기가 숨어 있어 안전하게 긁어 비닐을 자릅니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "지퍼형 롤러 랩 커터",
-        description: "가정에서 슬라이딩식 크린랩을 자를 때 팩 입구 레일 위에 얹어 좌우로 밀어서 랩을 깔끔히 자르는 칼날입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "열선식 무선 미니 실러",
-        description: "반대로 먹다 남은 과자 봉지나 비닐 입구에 대고 당기면 열선으로 녹여 밀봉해 주는 건전지식 가전 기기입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "자석 내장 냉장고 부착 랩칼",
-        description: "냉장고 벽면에 붙여두고 포장 택배나 비닐을 뜯을 때 즉시 떼어서 쓸 수 있는 자석형 미니 오프너입니다."
-      }
-    ]
-  },
-  {
-    id: "maracas",
+    id: 11,
     name: "마라카스",
-    officialName: "마라카스 (Maracas)",
+    official: "마라카스 (Maracas)",
+    description: "안에 작은 구슬이나 씨앗이 가득 들어 있어 흔들면 소리가 나는 호리병 모양의 타악기입니다.\n\n라틴 아메리카 카리브 해 지역이 원산지로, 주로 두 개를 한 쌍으로 사용합니다. 살사, 룸바 등 라틴 음악에서 필수적인 리듬 악기입니다.",
+    tags: ["악기", "타악기", "라틴", "흔들기", "리듬", "살사"],
     category: "misc",
-    image: "assets/egg_carton.png",
-    description: "동그랗고 빈 머리 부분 안에 작은 모래, 씨앗, 조약돌 등을 넣어 손잡이를 잡고 흔들면 '샥샥' 청량하고 경쾌한 소리가 나는 라틴아메리카의 대표적인 타악기입니다.",
-    tags: ["악기", "소리", "흔들기", "타악기", "리듬", "음악", "교육용"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "천연 코코넛 마라카스",
-        description: "말린 코코넛 열껍질을 깎아 손잡이를 달고 표면에 하와이안 조각을 새긴 클래식 라틴 타악기 마라카스입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "컬러풀 나무 유아용 마라카스",
-        description: "어린이집 리듬 교육용으로 주로 쓰이는, 알록달록 무늬가 그려진 매끄러운 단풍나무 마라카스입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "모던 플라스틱 마라카스",
-        description: "오케스트라나 스튜디오 녹음 시 균일하고 카랑카랑한 하이 피치 톤을 얻기 위해 인공 볼들로 채운 수지 마라카스입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "계란형 에그 셰이커",
-        description: "손잡이 없이 진짜 달걀 크기로 만들어 손아귀에 쏙 쥐고 미세한 리듬을 쪼갤 수 있게 만든 휴대용 달걀 흔들개입니다."
-      }
-    ]
+    image: "assets/11_maracas.png",
+    hint: "흔들면 소리가 나는 호리병 모양 라틴 리듬 악기"
   },
   {
-    id: "door_guard",
-    name: "도어가드 / 차량 문콕 스펀지",
-    officialName: "자동차 도어 가드 (Car Door Guard / Edge Protector)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "새 차를 사면 자동차 문 모서리에 붙어 있는 직사각형 모양의 파란색 스펀지입니다. 좁은 주차 공간에서 문을 열 때 옆 차를 치는 '문콕' 상처나 차량 페인트 벗겨짐을 방지하는 아주 고마운 보호대입니다.",
-    tags: ["자동차", "문콕", "스펀지", "파란색", "방지", "쿠션", "새차"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "신차 출고용 블루 스펀지",
-        description: "새 차를 인도받을 때 임시로 차량 도어 모서리에 양면테이프로 붙어 있는 대중적인 직사각형 하늘색 스펀지입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "슬림 카본 도어 몰딩",
-        description: "스펀지 대신 도어 가장자리 라인 전체를 투명하거나 카본 필름 무늬의 고무 몰딩으로 감싸 외관을 해치지 않는 슬림 패드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "캐릭터 실리콘 날개 가드",
-        description: "귀여운 날개나 동물 발바닥 모양으로 두껍게 입체 제작되어 시각적 귀여움과 뛰어난 충격 방지 효과를 주는 도어 가드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "자석 탈부착형 대형 가드",
-        description: "주차 시에만 자석식으로 옆문 전체 라인을 길게 덮고 내릴 때는 떼서 보관하는 외부 충돌 방지용 롱 패드입니다."
-      }
-    ]
-  },
-  {
-    id: "molly_guard",
-    name: "몰리 가드 / 비상 스위치 덮개",
-    officialName: "몰리 가드 / 오작동 방지 덮개 (Molly Guard)",
+    id: 12,
+    name: "실 뜯개",
+    official: "심 리퍼 (Seam Ripper)",
+    description: "박음질을 뜯거나 단춧구멍을 열 때 쓰는 끝이 갈고리 모양으로 생긴 작은 재봉 도구입니다.\n\n뾰족한 끝을 실 아래에 걸고 당기면 실이 끊어집니다. 의류 수선 시 없어서는 안 될 필수 바느질 도구입니다.",
+    tags: ["바느질", "재봉", "뜯기", "실", "도구", "의류"],
     category: "office",
-    image: "assets/egg_carton.png",
-    description: "중요한 컴퓨터 서버실 전원이나 미사일 발사, 기계 비상 정지 스위치 등을 실수로 누르지 못하도록 투명한 플라스틱이나 금속으로 덮어둔 위로 열어젖히는 구조의 보호 덮개입니다. 장난꾸러기 꼬마 '몰리'가 자꾸 서버 전원을 내려서 발명되었습니다.",
-    tags: ["스위치", "덮개", "방지", "보호", "안전", "서버실", "비상용"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "투명 플라스틱 플립 덮개",
-        description: "벽면 조명 스위치나 소방벨 버튼 겉면을 덮는, 손가락으로 가볍게 위로 플립해 젖히는 아크릴 재질의 기본 몰리 가드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "산업용 스틸 케이지 가드",
-        description: "중장비나 생산 설비 오동작을 막기 위해 두꺼운 강철 철조망이나 파이프로 물리 버튼 주변을 감싼 터프한 방패 가드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "미사일 키 트위스트 커버",
-        description: "중요 키를 꽂아 180도 돌린 후 보호 덮개를 열고 빨간 발사 스위치를 올리게 설계된 정교한 다단 잠금 가드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "터치스크린 디지털 락",
-        description: "화면의 가상 버튼을 잘못 터치하는 것을 예방하기 위해 화면 위에 슬라이드 잠금쇠 형태로 올려진 UI 디자인 영역입니다."
-      }
-    ]
+    image: "assets/12_sealingknife.png",
+    hint: "박음질을 뜯는 갈고리 모양 작은 바느질 도구"
   },
   {
-    id: "ad_balloon",
-    name: "애드벌룬 / 광고 풍선",
-    officialName: "애드벌룬 (Ad Balloon / Advertising Balloon)",
+    id: 13,
+    name: "리본 책갈피",
+    official: "리본 마커 (Ribbon Bookmark / Marker)",
+    description: "책 페이지를 표시하기 위해 끼워두는 얇은 리본 모양 책갈피입니다.\n\n고급 서적이나 다이어리의 경우 제본 단계에서 리본 끈이 책등에 직접 부착되기도 합니다. 실크, 새틴 등 다양한 소재로 만들어집니다.",
+    tags: ["책", "독서", "책갈피", "페이지", "리본", "마커"],
+    category: "office",
+    image: "assets/13_ribbonmarker.png",
+    hint: "책 페이지를 표시하는 얇고 긴 리본 모양 끈 책갈피"
+  },
+  {
+    id: 14,
+    name: "콘페티",
+    official: "콘페티 (Confetti)",
+    description: "파티, 행사, 결혼식 등에서 축하를 표현하기 위해 뿌리는 알록달록한 작은 종이 조각들입니다.\n\n이탈리아어로 '작은 과자'라는 뜻에서 유래했으며, 원래는 사탕이나 견과류를 뿌리던 것이 종이 조각으로 변형되었습니다.",
+    tags: ["파티", "행사", "축하", "종이", "장식", "생일"],
     category: "misc",
-    image: "assets/egg_carton.png",
-    description: "아파트 모델하우스나 백화점 오픈 행사 시 하늘에 둥실둥실 띄워 멀리서도 잘 보이게 하는 대형 광고용 풍선입니다. 하단에 매단 세로 현수막에 축하 문구나 전화번호를 인쇄해 둡니다.",
-    tags: ["풍선", "하늘", "광고", "하늘에뜬거", "대형", "오픈", "행사"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "구형 오렌지 광고 풍선",
-        description: "가장 일반적인 원형 고무 튜브에 헬륨가스를 채워 높은 하늘에 밧줄로 고정해 공중에 계류시키는 애드벌룬입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "비행선 모양 조종 풍선",
-        description: "바람의 저항을 이겨내고 광고 면적을 넓히기 위해 가로가 긴 유선형 럭비공 모양으로 디자인된 비행선 애드벌룬입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "지상 송풍식 댄싱 가이",
-        description: "가스 주입 없이 지상 모터 바람으로 흐느적흐느적 춤추며 골목 주유소나 상가 앞 시선을 끄는 바람 풍선 인형입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "LED 조명 투명 야간 벌룬",
-        description: "야간 축제에서 풍선 내부에 고휘도 LED 램프를 켜서 밤하늘에 은은한 조명 효과를 주는 미적 야간 애드벌룬입니다."
-      }
-    ]
+    image: "assets/14_confetti.png",
+    hint: "파티에서 뿌리는 알록달록한 작은 종이 조각들"
   },
   {
-    id: "pharaoh_nemes",
-    name: "네메스 / 파라오 머리수건",
-    officialName: "네메스 (Nemes / Headdress)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "고대 이집트 파라오(왕)들이 왕권과 태양신을 상징하기 위해 머리에 썼던 줄무늬가 있는 천 재질의 두건입니다. 투탕카멘 황금가면의 옆머리 부분으로 늘어진 파란색과 금색 줄무늬가 바로 이것입니다.",
-    tags: ["이집트", "파라오", "두건", "피라미드", "머리장식", "왕관", "줄무늬"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "투탕카멘 금청색 네메스",
-        description: "순금과 짙은 푸른색 라피스 라줄리 원석이 교대로 교차되어 이마에 코브라와 독수리 장식이 달린 호사스러운 전통 네메스입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "린넨 백색 일반 네메스",
-        description: "의식용이 아닌 실생활에서 태양볕과 사막 모래를 차단하기 위해 일반 세마포(린넨) 천으로 가볍게 제작해 묶은 두건입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "파라오 벽화용 와이드 두건",
-        description: "옆으로 귀 부분이 날개처럼 더 넓게 뻗어 나가 상반신 실루엣을 돋보이게 만든 고대 이집트 중왕기 시대 벽화형 네메스입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "코스프레용 패브릭 모자",
-        description: "이집트 테마 파티나 영화 소품으로 간편하게 머리에 얹어 뒤를 벨크로로 고정할 수 있게 만든 현대 모방용 네메스입니다."
-      }
-    ]
-  },
-  {
-    id: "winter_tree_wrap",
-    name: "잠복소 / 나무 짚 옷",
-    officialName: "잠복소 (Winter Tree Shelter / Banding)",
-    category: "misc",
-    image: "assets/egg_carton.png",
-    description: "가을철 가로수 줄기 아래쪽에 허리띠처럼 둘러 묶어두는 짚으로 만든 거적입니다. 겨울에 추위를 피해 벌레들이 이 짚 밑으로 기어들어 가 숨게 한 뒤, 이듬해 봄에 짚을 떼어 불태움으로써 해충을 방제하는 친환경 농업 도구입니다.",
-    tags: ["나무", "가로수", "짚", "겨울", "해충", "벌레", "시골", "보호"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "볏짚 엮음 새끼줄 잠복소",
-        description: "벼를 탈곡하고 남은 지푸라기를 촘촘하게 발처럼 엮어서 노끈이나 새끼줄로 단단히 감아 두는 전통 잠복소입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "현대 가로수 황토 부직포",
-        description: "볏짚의 부식과 해충 방제 실효성 논란을 보완하기 위해 통기성과 보온성이 높은 부직포 원단으로 깔끔하게 감싼 부직포 밴딩입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "해충 유인 화학 코팅 밴드",
-        description: "벌레들이 싫어하는 살충 물질을 내부에 도포하여 숨어 들어온 즉시 살충되도록 만든 특수 약제 함침 잠복 밴드입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "그래피티 니팅 뜨개옷",
-        description: "겨울철 도시 미관을 따뜻하게 꾸미기 위해 시민들이 털실로 알록달록 무늬를 짜서 나무에 입혀준 뜨개 옷입니다."
-      }
-    ]
-  },
-  {
-    id: "coffee_sip_stick",
-    name: "십 스틱 / 구멍 두개 빨대",
-    officialName: "십 스틱 / 커피 스틱 (Sip Stick / Coffee Stirrer)",
+    id: 15,
+    name: "옥춘당 / 알사탕",
+    official: "옥춘당 (Okchundang Hard Candy)",
+    description: "오색으로 색을 입힌 단단한 구슬 모양의 전통 사탕입니다.\n\n주로 잔치나 제사상 위에 올리거나 어린이에게 나눠주는 용도로 많이 쓰입니다. 색깔은 오방색(청·백·적·흑·황)을 기반으로 하며, 달콤한 설탕 맛이 납니다.",
+    tags: ["사탕", "알사탕", "전통", "구슬", "간식", "오방색"],
     category: "kitchen",
-    image: "assets/egg_carton.png",
-    description: "카페에서 테이크아웃 뜨거운 커피를 주문하면 꽂아 주는, 두 개의 아주 좁은 통로가 나란히 붙어 있는 얇고 납작한 갈색 플라스틱 빨대 겸용 젓개입니다. 구멍이 극히 좁아 뜨거운 음료가 한 번에 훅 들어와 혀를 데는 것을 막아줍니다.",
-    tags: ["커피", "스틱", "빨대", "카페", "두구멍", "뜨거운커피", "젓개"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "갈색 플라스틱 2구 십스틱",
-        description: "구멍 두 개가 안경알처럼 붙어 있는 가장 표준적인 갈색 폴리스티렌 재질의 플라스틱 십 스틱입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "납작 1구 나무 슬림 젓개",
-        description: "구멍이 뚫려 있지 않아 음료를 빨아 마실 수는 없고, 오직 설탕이나 시럽을 젓는 용도로만 쓰는 납작하고 얇은 자작나무 스틱입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "친환경 종이 슬라이스 스틱",
-        description: "종이를 단단히 압착하여 액체에 오래 담가둬도 풀리지 않게 만든 친환경 종이 젓개입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "실리콘 다회용 에코 빨대",
-        description: "개인 텀블러에 꽂아 다닐 수 있도록 얇은 빨대와 끝 머리에 세척 솔이 포함된 식품용 실리콘 다회용 스틱입니다."
-      }
-    ]
+    image: "assets/15_Okchundang.png",
+    hint: "잔칫날 나눠주는 오색 구슬 모양 단단한 전통 사탕"
   },
   {
-    id: "flagpole_finial",
-    name: "국기봉 / 깃대 머리",
-    officialName: "국기봉 무궁화 봉오리 / 깃대 장식 (Flagpole Finial)",
+    id: 16,
+    name: "에글렛",
+    official: "에글렛 (Aglet)",
+    description: "신발 끈이나 가방 끈 끝에 씌워진 금속 또는 플라스틱 마감 캡입니다.\n\n이 캡이 없으면 끈 끝이 풀리거나 헤져서 끈을 구멍에 꿰기 어려워집니다. 15세기부터 이미 금속 에글렛이 사용된 기록이 남아 있습니다.",
+    tags: ["신발", "끈", "마감", "금속", "캡", "신발끈", "가방"],
     category: "misc",
-    image: "assets/egg_carton.png",
-    description: "태극기나 단체 기를 매다는 깃대 끝부분에 달린 금빛 꽃봉오리 장식입니다. 대한민국의 경우 나라꽃인 무궁화의 핀 꽃봉오리 모양으로 하단에 꽃받침이 뚜렷하게 도안되어 있습니다.",
+    image: "assets/16_aglet.png",
+    hint: "신발 끈 끝에 씌워진 작은 금속 또는 플라스틱 마감 캡"
+  },
+  {
+    id: 17,
+    name: "바란",
+    official: "바란 (Baran / 葉蘭)",
+    description: "초밥 도시락이나 과일 용기 안에서 음식이 서로 섞이지 않도록 경계를 만드는 녹색 플라스틱 잎 모양 파티션입니다.\n\n일본어로 '하란(葉蘭)'이라고도 부르며, 원래는 실제 대나무나 조릿대 잎을 사용했습니다. 항균 효과가 있다고 알려져 있으나, 현대에는 대부분 플라스틱으로 대체되었습니다.",
+    tags: ["초밥", "도시락", "구분", "녹색잎", "플라스틱", "일본"],
+    category: "kitchen",
+    image: "assets/17_baran.png",
+    hint: "초밥 도시락 칸 사이에 넣는 녹색 플라스틱 잎 모양 칸막이"
+  },
+  {
+    id: 18,
+    name: "래싱 탭 / D링",
+    official: "래싱 탭 (Lashing Tab / D-Ring)",
+    description: "트럭이나 화물선의 화물 위에 씌운 방수포를 로프로 당겨 고정하는 금속 D자 모양 고리입니다.\n\n화물칸 바닥이나 측벽에 용접 또는 볼트로 단단히 고정되어 있으며, 적재물이 운송 중 이동하지 않도록 묶는 기준점 역할을 합니다.",
+    tags: ["화물", "트럭", "고정", "로프", "D링", "운송"],
+    category: "misc",
+    image: "assets/18_lashtab.png",
+    hint: "트럭 화물칸에 로프를 걸어 방수포를 고정하는 금속 D형 고리"
+  },
+  {
+    id: 19,
+    name: "못",
+    official: "네일 (Nail)",
+    description: "망치로 박아 물건을 고정하거나 벽에 걸이를 만드는 데 쓰는 뾰족한 금속 핀입니다.\n\n머리 부분(헤드)과 몸통(생크), 뾰족한 끝(팁)으로 구성되며, 길이·굵기·소재·끝 모양에 따라 수십 가지 종류가 있습니다.",
+    tags: ["망치", "박기", "벽", "고정", "금속", "철", "공구"],
+    category: "misc",
+    image: "assets/19_nail.png",
+    hint: "망치로 박아 물건을 고정하는 뾰족한 금속 핀"
+  },
+  {
+    id: 20,
+    name: "씰링 왁스",
+    official: "봉랍 / 씰링 왁스 (Sealing Wax)",
+    description: "편지나 봉투 봉인에 녹여 스탬프를 눌러 인장을 찍는 왁스 봉입니다.\n\n중세 시대부터 중요한 문서나 편지의 봉인에 사용되어 왔으며, 인장(시그넷 링)을 눌러 발신자를 인증하는 역할을 했습니다. 현대에는 복고 감성의 편지 꾸미기에 많이 쓰입니다.",
+    tags: ["편지", "봉인", "스탬프", "왁스", "인장", "복고", "빨간"],
+    category: "office",
+    image: "assets/20_sealingwax.png",
+    hint: "편지 봉인에 녹여 인장을 찍는 빨간 왁스 봉"
+  },
+  {
+    id: 21,
+    name: "부표",
+    official: "부이 (Buoy)",
+    description: "바다나 강에 떠있는 부유 구조물로, 선박에게 위치 정보·위험 구역·항로를 알려주는 신호 장치입니다.\n\n국제 표준에 따라 색과 모양으로 의미가 구분됩니다. 빨간색은 우측 항행 경계, 초록색은 좌측 항행 경계 등으로 사용됩니다.",
+    tags: ["바다", "항해", "신호", "부유", "항구", "안전"],
+    category: "misc",
+    image: "assets/21_Buoy.png",
+    hint: "바다에 떠서 선박에게 항로와 위험 구역을 알려주는 부유 신호"
+  },
+  {
+    id: 22,
+    name: "기뢰",
+    official: "기뢰 (Naval Mine)",
+    description: "바닷속에 숨겨 적 함선이 접촉하거나 가까이 오면 폭발하도록 설계된 수중 폭발 병기입니다.\n\n둥근 몸체에 여러 개의 돌기(촉각기)가 달린 특유의 형태로 알려져 있습니다. 19세기 크림 전쟁에서 실전 사용된 이후 주요 해군 전술 무기로 자리 잡았습니다.",
+    tags: ["바다", "해군", "무기", "폭발", "전쟁", "수중"],
+    category: "misc",
+    image: "assets/22_NavalMine.png",
+    hint: "바닷속에 숨겨두는 돌기 달린 구형 수중 폭발 무기"
+  },
+  {
+    id: 23,
+    name: "볼라드",
+    official: "볼라드 (Bollard)",
+    description: "인도와 차도 경계, 공공 시설 앞에 주차 차단과 보행자 보호를 위해 세워두는 짧고 굵은 기둥입니다.\n\n원래는 항구에서 배를 계류하는 데 쓰이던 말뚝에서 유래했습니다. 현대 도심에서는 테러 차량 돌진 방지용 강화형 볼라드도 사용됩니다.",
+    tags: ["인도", "차단", "주차", "도시", "기둥", "안전", "보행자"],
+    category: "misc",
+    image: "assets/23_bollard.png",
+    hint: "인도에서 차량 진입을 막기 위해 세우는 짧고 굵은 기둥"
+  },
+  {
+    id: 24,
+    name: "과일 받침 트레이",
+    official: "후르츠 트레이 (Fruit Foam Tray / Net Wrap)",
+    description: "마트 과일 코너에서 사과나 배 밑에 깔아두는 그물 모양 스티로폼 받침대입니다.\n\n과일 표면을 충격에서 보호하고 외관을 유지합니다. 발포 폴리스티렌(EPS) 소재가 많으며, 환경 부담이 커서 최근에는 종이 소재 대안도 개발되고 있습니다.",
+    tags: ["과일", "사과", "마트", "포장", "스티로폼", "보호"],
+    category: "kitchen",
+    image: "assets/24_Fruit tray.png",
+    hint: "사과나 배 밑에 까는 그물 모양 스티로폼 받침대"
+  },
+  {
+    id: 25,
+    name: "달걀 이력 코드",
+    official: "계란 이력 추적 코드 (Egg Code)",
+    description: "달걀 껍데기에 찍혀있는 10자리 이력 추적 코드입니다.\n\n산란 일자(4자리), 생산자 고유번호(5자리), 사육 환경 번호(1자리)로 구성됩니다. 사육 환경 번호는 1(방목), 2(케이지 없음), 3(개선 케이지), 4(기존 케이지)를 나타냅니다.",
+    tags: ["달걀", "코드", "이력", "식품", "안전", "숫자", "껍데기"],
+    category: "kitchen",
+    image: "assets/25_Egg code.png",
+    hint: "달걀 껍데기에 찍힌 10자리 이력 추적 숫자 코드"
+  },
+  {
+    id: 26,
+    name: "달걀판",
+    official: "에그 카톤 (Egg Carton / Egg Box)",
+    description: "달걀을 운반·보관할 때 깨지지 않도록 각각 품어주는 종이 또는 플라스틱 칸막이 용기입니다.\n\n6구, 10구, 12구, 30구 등 다양한 크기가 있으며, 오목한 각 칸이 달걀이 맞닿아 부딪히는 것을 막습니다. 빈 달걀판은 방음재·묘목 육묘판·공예 재료로 재활용 가능합니다.",
+    tags: ["달걀", "포장", "운반", "칸막이", "종이", "보관"],
+    category: "kitchen",
+    image: "assets/26_eggcarton.png",
+    hint: "달걀이 깨지지 않도록 품어주는 오목한 칸막이 용기"
+  },
+  {
+    id: 27,
+    name: "배 키 / 조타기",
+    official: "선박 조타기 (Ship's Wheel / Helm)",
+    description: "선박의 방향을 조절하는 나무 또는 금속 재질의 바퀴 모양 조향 장치입니다.\n\n18세기 초 선박에 도입되어, 그 이전의 조타봉(rudder tiller)을 대체했습니다. 해적·항해 시대의 아이콘으로도 널리 사용됩니다.",
+    tags: ["배", "항해", "바퀴", "조타", "선박", "방향", "해적"],
+    category: "misc",
+    image: "assets/27_shiphelm.png",
+    hint: "배의 방향을 조종하는 나무 바퀴 모양 조향 장치"
+  },
+  {
+    id: 28,
+    name: "베일 사일리지",
+    official: "베일 사일리지 (Bale Silage / Round Bale)",
+    description: "목초 등 여물을 원통형으로 압축해 하얀 비닐로 감싸 발효·보관하는 사료 덩어리입니다.\n\n농장에서 겨울철 가축 먹이를 저장하기 위해 들판에 굴려두는 하얀 원통입니다. 비닐 밀봉으로 혐기성 발효가 일어나 영양가가 높은 먹이가 됩니다.",
+    tags: ["농장", "사료", "발효", "비닐", "소", "들판", "원통"],
+    category: "misc",
+    image: "assets/28_Bale Silage.png",
+    hint: "농장 들판에 굴려두는 하얀 비닐로 감싼 원통형 사료 덩어리"
+  },
+  {
+    id: 29,
+    name: "킬",
+    official: "용골 / 킬 (Keel)",
+    description: "선박의 바닥 중앙을 앞뒤로 가로지르며 배의 척추 역할을 하는 주요 구조재입니다.\n\n배의 균형을 잡고 선체를 지지하는 핵심 부재로, 배를 건조할 때 가장 먼저 놓이는 부재입니다. '킬을 내린다'는 표현은 선박 건조 착공을 의미합니다.",
+    tags: ["배", "구조", "선박", "균형", "건조", "척추"],
+    category: "misc",
+    image: "assets/29_kee.png",
+    hint: "선박 바닥 중앙의 척추 역할을 하는 주요 구조재"
+  },
+  {
+    id: 30,
+    name: "암사슴",
+    official: "도 (Doe)",
+    description: "사슴의 암컷을 가리키는 영어 표현입니다.\n\n수컷(Buck)과 달리 뿔이 없고, 부드럽고 온순한 눈망울이 특징입니다. 새끼 사슴은 폰(Fawn)이라고 부릅니다. 솔의 눈, 밤비 등 많은 창작물에서 온순함·자연·순수함을 상징합니다.",
+    tags: ["사슴", "동물", "암컷", "숲", "자연", "온순"],
+    category: "misc",
+    image: "assets/30_doe.png",
+    hint: "뿔이 없는 사슴 암컷"
+  },
+  {
+    id: 31,
+    name: "꿀 디퍼",
+    official: "허니 디퍼 (Honey Dipper)",
+    description: "꿀 항아리에 담가 빙빙 돌려 꿀을 길어올린 뒤 음식이나 음료에 뿌리는 홈이 파인 나무 막대입니다.\n\n끝부분에 나선형으로 홈이 파여 있어 꿀이 실처럼 얇고 고르게 흘러내립니다. 나무 소재가 흔하지만 세라믹, 유리 제품도 있습니다.",
+    tags: ["꿀", "주방", "나무", "막대", "디저트", "나선"],
+    category: "kitchen",
+    image: "assets/31_honeystick.png",
+    hint: "꿀을 길어올려 뿌리는 홈 파인 나무 막대"
+  },
+  {
+    id: 32,
+    name: "가랜드",
+    official: "가랜드 (Garland)",
+    description: "파티나 행사 장식을 위해 여러 개의 종이·천·꽃 장식물을 끈에 매달아 연결한 장식 줄입니다.\n\n삼각기 형태(번팅 가랜드)나 꼬마전구 형태 등 다양한 종류가 있습니다. 생일 파티, 결혼식, 크리스마스 등 각종 행사 공간 꾸미기에 애용됩니다.",
+    tags: ["파티", "장식", "행사", "꾸미기", "생일", "인테리어"],
+    category: "misc",
+    image: "assets/32_Garland.png",
+    hint: "파티 장식을 위해 끈에 매단 깃발·종이 모양 장식 줄"
+  },
+  {
+    id: 33,
+    name: "메스틴",
+    official: "메스틴 (Mess Tin)",
+    description: "뚜껑이 달린 직사각형 알루미늄 야외 취사도구입니다.\n\n원래 군용으로 개발되어 밥·국·부식을 모두 담을 수 있도록 다용도로 설계되었습니다. 가볍고 내구성이 강해 현재는 캠핑·백패킹 마니아들 사이에서 큰 인기를 얻고 있습니다.",
+    tags: ["캠핑", "취사", "알루미늄", "야외", "백패킹", "군용"],
+    category: "misc",
+    image: "assets/33_messtin.png",
+    hint: "캠핑에서 쓰는 뚜껑 달린 직사각형 알루미늄 취사도구"
+  },
+  {
+    id: 34,
+    name: "국기봉 / 깃대 장식",
+    official: "피니얼 / 국기봉 끝 장식 (Flagpole Finial)",
+    description: "국기를 매다는 깃대 꼭대기에 달린 장식입니다.\n\n대한민국의 경우 나라꽃 무궁화의 꽃봉오리를 형상화한 금빛 장식을 사용합니다. 각 나라마다 독수리, 구슬, 창 등 다양한 형태의 피니얼을 씁니다.",
     tags: ["태극기", "깃대", "꼭대기", "무궁화", "금색", "봉오리", "국기"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "무궁화 황동색 국기봉",
-        description: "하단에 5片의 뚜렷한 꽃받침이 있고 겉면을 금색이나 황동색 전기도금으로 광택을 낸 정통 대한민국 규격 국기봉입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "미 군용 창끝 국기 장식",
-        description: "미국 국기나 군기 꼭대기에 꽂는, 승리와 수호를 뜻하는 날카로운 금속 화살촉이나 창끝 모양의 스피어(Spear) 피니얼입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "영국식 왕관 깃대 헤드",
-        description: "영국 연방 국가나 왕실 관련 깃발 끝에 매다는 황동 조각으로 된 로열 크라운 모양의 깃대 크라운 장식입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "행사용 원형 볼 피니얼",
-        description: "야외 깃대에 국기가 바람에 엉키는 것을 막기 위해 회전 링 구조를 장착한 금색 알루미늄 구형(Ball) 헤드 장식입니다."
-      }
-    ]
+    category: "misc",
+    image: "assets/34_starping.png",
+    hint: "깃대 꼭대기에 달린 무궁화 꽃봉오리 모양의 금빛 장식"
   },
   {
-    id: "traffic_cone",
-    name: "트래픽 콘 / 라바콘",
-    officialName: "트래픽 콘 / 도로 통제 고깔 (Traffic Cone / Road Cone)",
+    id: 35,
+    name: "스프링클",
+    official: "스프링클 (Sprinkles / Jimmies)",
+    description: "케이크나 아이스크림 위에 뿌려 색을 내는 알록달록한 작은 막대 모양 설탕 장식입니다.\n\n미국 동부에서는 '지미스(Jimmies)'라고도 부릅니다. 초콜릿 맛, 바닐라 맛, 무지개색 등 다양한 종류가 있으며, 원형이나 별 모양 등 다양한 형태도 있습니다.",
+    tags: ["케이크", "아이스크림", "설탕", "장식", "디저트", "달콤", "무지개"],
+    category: "kitchen",
+    image: "assets/35_sprinkle.png",
+    hint: "케이크·아이스크림 위에 뿌리는 알록달록 작은 막대 설탕 장식"
+  },
+  {
+    id: 36,
+    name: "후크 앤 아이",
+    official: "후크 앤 아이 클로저 (Hook and Eye Closure)",
+    description: "두 개의 작은 금속 고리를 서로 채워 잠그는 의류 부착 도구입니다.\n\n드레스·블라우스의 등 부분, 스커트 허리 등에 많이 사용됩니다. 지퍼나 단추보다 얇고 눈에 잘 띄지 않아 외관상 깔끔한 마감에 쓰입니다.",
+    tags: ["의류", "고리", "잠금", "핀", "후크", "패션", "잠금장치"],
     category: "misc",
-    image: "assets/egg_carton.png",
-    description: "도로 공사 구간이나 주차 차단 구역, 사고 현장 등에서 차량 통행을 유도하고 보행자의 접근을 막기 위해 길에 세워두는 주황색 원뿔 모양의 고무 고깔입니다. 만화 '라바' 캐릭터처럼 생겨 '라바콘'으로도 널리 불립니다.",
-    tags: ["도로", "라바콘", "원뿔", "안전", "공사", "주차", "차선", "오렌지"],
-    otherDesigns: [
-      {
-        image: "assets/egg_carton.png",
-        officialName: "주황색 탄성 고무 라바콘",
-        description: "반사 띠 시트지가 둘러져 있어 야간에도 라이트를 받으면 밝게 빛나며 밟혀도 원래대로 복원되는 표준 트래픽 콘입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "블랙 베이스 중량 라바콘",
-        description: "강풍이나 대형차 바람에 넘어지지 않도록 하단 받침을 무거운 재생 고무 블랙 플레이트로 묵직하게 보강한 콘입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "접이식 주머니 리플렉터 콘",
-        description: "비상시 트렁크에 콤팩트하게 보관하다 위로 당겨 올리면 야간 LED 조명이 켜지며 자립하는 주름식 자바라 콘입니다."
-      },
-      {
-        image: "assets/egg_carton.png",
-        officialName: "링 탑 홀더 가이드 콘",
-        description: "고깔 상단 구멍에 차단봉(Bar)이나 쇠사슬을 걸어서 여러 콘을 일렬로 넓게 연결할 수 있도록 고리가 부착된 연결용 콘입니다."
-      }
-    ]
+    image: "assets/36_hook pin.png",
+    hint: "옷의 고리 두 개를 서로 걸어 잠그는 작은 금속 의류 잠금 장치"
+  },
+  {
+    id: 37,
+    name: "테트라포드",
+    official: "테트라포드 (Tetrapod)",
+    description: "파도 에너지를 분산해 항구 방파제나 해안을 보호하는 네 다리 콘크리트 블록입니다.\n\n서로 맞물리도록 쌓여 파도의 에너지를 효과적으로 흡수하며, 1950년대 프랑스에서 처음 개발되었습니다. 바다 방파제 위에 쌓인 회색 덩어리들이 바로 이것입니다.",
+    tags: ["방파제", "해안", "콘크리트", "파도", "항구", "보호", "네다리"],
+    category: "misc",
+    image: "assets/37_Tetrapod.png",
+    hint: "방파제에 쌓인 네 다리 달린 회색 콘크리트 블록"
+  },
+  {
+    id: 38,
+    name: "이젤",
+    official: "이젤 (Easel)",
+    description: "그림판이나 캔버스를 세워두는, 세 다리를 펼칠 수 있는 나무 또는 금속 삼각대입니다.\n\n화가들이 그림을 그릴 때 필수로 사용하며, 전시용 패널이나 화이트보드를 지지하는 용도로도 쓰입니다. 접이식 구조로 이동이 간편합니다.",
+    tags: ["그림", "미술", "캔버스", "삼각대", "화가", "전시"],
+    category: "misc",
+    image: "assets/38_easel.png",
+    hint: "캔버스를 세워두는 세 다리 접이식 나무 삼각대"
+  },
+  {
+    id: 39,
+    name: "이퀄라이저",
+    official: "그래픽 이퀄라이저 (Graphic Equalizer / EQ)",
+    description: "각 주파수 대역의 음량을 개별적으로 조절하는 음향 장치입니다.\n\n저음(베이스)부터 고음(트레블)까지 여러 개의 슬라이더로 나누어 원하는 음향을 만들 수 있습니다. 음악 믹싱, 스튜디오 작업, 가정용 오디오에 폭넓게 사용됩니다.",
+    tags: ["음악", "소리", "주파수", "음향", "스피커", "오디오", "슬라이더"],
+    category: "office",
+    image: "assets/39_Equalizer.png",
+    hint: "음악 주파수를 조절하는 슬라이더 막대 장치"
+  },
+  {
+    id: 40,
+    name: "텀블위드",
+    official: "텀블위드 (Tumbleweed)",
+    description: "말라 죽으면 뿌리에서 끊겨 바람에 굴러다니며 씨앗을 퍼뜨리는 서부 사막 식물 덩어리입니다.\n\n미국 남서부와 유라시아 스텝 지대에 자생하는 러시아 엉겅퀴(Kali tragus)가 대표적입니다. 황량한 서부 영화의 상징으로, 적막함·고독함을 시각적으로 표현할 때 자주 등장합니다.",
+    tags: ["사막", "서부", "바람", "식물", "굴러다니는", "미국"],
+    category: "misc",
+    image: "assets/40_Tumbleweed.png",
+    hint: "서부 사막에서 바람에 굴러다니는 말라 죽은 식물 덩어리"
+  },
+  {
+    id: 41,
+    name: "의사봉 / 가벨",
+    official: "가벨 (Gavel)",
+    description: "법원 판사나 경매사, 의회 의장이 탁자에 탁 내리쳐 결정·개시·종료를 알리는 작은 나무 망치입니다.\n\n'딱!' 소리와 함께 판결 확정이나 경매 낙찰을 공식 선언합니다. 목재 재질이 흔하며, 그 아래에 사운딩 블록(타격대)이 함께 사용됩니다.",
+    tags: ["법원", "판사", "경매", "망치", "결정", "선언", "의회"],
+    category: "misc",
+    image: "assets/41_gavel.png",
+    hint: "법원에서 판사가 내리치는 결정을 알리는 작은 나무 망치"
+  },
+  {
+    id: 42,
+    name: "알베도 / 귤 속껍질",
+    official: "알베도 (Albedo)",
+    description: "오렌지나 귤 등 감귤류 과일의 외피와 과육 사이에 있는 하얗고 스펀지 같은 섬유 층입니다.\n\n쓴맛이 나지만 식이섬유와 바이오플라보노이드(헤스페리딘)가 풍부합니다. 귤을 까면 과육에 붙어 있는 하얀 실 같은 부분이 바로 알베도입니다.",
+    tags: ["귤", "오렌지", "속껍질", "과일", "쓴맛", "하얀", "섬유"],
+    category: "kitchen",
+    image: "assets/42_albedo.png",
+    hint: "귤을 까면 과육에 붙어있는 하얗고 스펀지 같은 안쪽 껍질"
+  },
+  {
+    id: 43,
+    name: "솜브레로",
+    official: "솜브레로 (Sombrero)",
+    description: "챙이 매우 넓고 꼭대기가 높이 솟은 멕시코 전통 모자입니다.\n\n스페인어로 '그늘을 만드는 것(sombra: 그늘)'이라는 뜻으로, 강한 햇볕을 차단하기 위한 실용적 목적에서 발전했습니다. 마리아치 음악과 함께 멕시코 문화를 상징하는 대표 아이콘입니다.",
+    tags: ["멕시코", "모자", "전통", "라틴", "챙모자", "스페인"],
+    category: "misc",
+    image: "assets/43_Sombrero.png",
+    hint: "챙이 넓고 꼭대기가 높이 솟은 멕시코 전통 모자"
+  },
+  {
+    id: 44,
+    name: "켈프 누들",
+    official: "켈프 누들 (Kelp Noodles)",
+    description: "다시마에서 추출한 젤 성분으로 만든 반투명 국수 형태의 해조류 음식입니다.\n\n칼로리가 거의 없고 글루텐 프리이며, 독특한 쫄깃한 식감이 특징입니다. 건강식·비건 요리에서 대체 면 재료로 주목받고 있습니다.",
+    tags: ["다시마", "해조류", "국수", "건강식", "채식", "저칼로리"],
+    category: "kitchen",
+    image: "assets/44_kelp noodles.png",
+    hint: "다시마로 만든 반투명 쫄깃한 저칼로리 해조류 국수"
+  },
+  {
+    id: 45,
+    name: "절구",
+    official: "모르타르 앤드 페슬 (Mortar and Pestle)",
+    description: "약초나 향신료를 으깨고 빻는 데 쓰는 돌 또는 도자기 그릇(모르타르)과 방망이(페슬) 세트입니다.\n\n인류 역사상 가장 오래된 조리 도구 중 하나로, 기원전 35,000년 이전부터 사용되었습니다. 고수를 갈거나 후추를 빻는 등 신선한 향신료 분쇄에 지금도 쓰입니다.",
+    tags: ["절구", "향신료", "빻기", "조리", "돌", "주방", "갈기"],
+    category: "kitchen",
+    image: "assets/45_mortar and pestle.png",
+    hint: "약초·향신료를 으깨는 돌절구와 방망이 세트"
+  },
+  {
+    id: 46,
+    name: "초승달",
+    official: "크레센트 문 (Crescent Moon)",
+    description: "달이 음력 초기에 보이는 얇은 활 모양입니다.\n\n이슬람 문화를 상징하는 아이콘으로 많은 이슬람 국가 국기에 등장합니다. 터키, 파키스탄, 알제리 등의 국기에서 찾아볼 수 있으며, 오스만 제국을 거쳐 이슬람권 전반의 상징이 되었습니다.",
+    tags: ["달", "초승달", "이슬람", "장식", "밤", "기호", "하늘"],
+    category: "misc",
+    image: "assets/46_crescent.png",
+    hint: "음력 초에 보이는 얇은 활 모양의 달"
+  },
+  {
+    id: 47,
+    name: "페룰",
+    official: "페룰 (Ferrule)",
+    description: "우산·지팡이·연필 끝을 마감하거나 강화하기 위해 끼우는 금속 캡이나 링입니다.\n\n도구 끝부분이 닳거나 갈라지지 않도록 보호하는 역할을 합니다. 우산 끝의 뾰족한 금속 마감, 지팡이나 목발 바닥의 고무 캡도 모두 페룰의 일종입니다.",
+    tags: ["우산", "지팡이", "연필", "마감", "금속", "캡", "보호"],
+    category: "misc",
+    image: "assets/47_ferrule.png",
+    hint: "우산·지팡이 끝을 보호하는 금속 또는 고무 마감 캡"
+  },
+  {
+    id: 48,
+    name: "지퍼 풀 / 풀 탭",
+    official: "지퍼 풀 탭 (Zipper Pull Tab / Pull Loop)",
+    description: "지퍼 끝이나 의류·가방 태그에 달린, 손으로 당겨 여닫는 작은 고리입니다.\n\n두꺼운 장갑을 끼고 있을 때도 쉽게 조작할 수 있도록 크게 만들기도 합니다. 재킷의 지퍼, 가방의 지퍼 등 생활 곳곳에서 찾아볼 수 있습니다.",
+    tags: ["지퍼", "가방", "옷", "당기기", "고리", "패션", "야외"],
+    category: "misc",
+    image: "assets/48_Pull loops.png",
+    hint: "지퍼를 여닫기 위해 손으로 당기는 작은 고리"
+  },
+  {
+    id: 49,
+    name: "슬라이드 버클",
+    official: "슬라이드 버클 (Slide Buckle / Tri-Glide)",
+    description: "가방이나 배낭 스트랩, 멜빵 등의 길이를 조절하는 금속 또는 플라스틱 걸쇠입니다.\n\n사각형 테두리 안에 가로대가 하나 있어 끈을 꿰어 길이를 무단계로 조절할 수 있습니다. 군용 장비, 배낭, 벨트, 반려동물 목줄에도 널리 쓰입니다.",
+    tags: ["가방", "배낭", "버클", "스트랩", "조절", "금속", "벨트"],
+    category: "misc",
+    image: "assets/49_slide buckle.png",
+    hint: "가방·배낭 끈 길이를 조절하는 네모 테두리 금속 걸쇠"
+  },
+  {
+    id: 50,
+    name: "종이 심",
+    official: "페이퍼 코어 (Paper Tube / Core)",
+    description: "두루마리 화장지, 키친타월, 호일, 비닐 랩의 중심에 들어있는 원통 모양의 종이 심입니다.\n\n강도를 높이기 위해 얇은 종이를 나선형으로 여러 겹 감아 만듭니다. 재료가 다 떨어진 뒤에도 공예, 놀이, 씨앗 묘목 포트 등으로 재활용할 수 있습니다.",
+    tags: ["화장지", "두루마리", "종이", "심", "재활용", "원통", "공예"],
+    category: "kitchen",
+    image: "assets/50_paper tube.png",
+    hint: "두루마리 화장지 다 쓰면 남는 원통 종이 심"
   }
 ];
 
-// App State
-let activePage = 1;
-let currentCategory = "all";
-let isSearching = false;
-let currentBgItem = null;
+// ─────────────────────────────────────────────────────────────
+// 2. STATE
+// ─────────────────────────────────────────────────────────────
+const state = {
+  currentView: 'grid',   // 'grid' | 'stack'
+  favorites: new Set(JSON.parse(localStorage.getItem('favorites') || '[]')),
+  showFavoritesOnly: false,
+  searchQuery: '',
+  filteredItems: [...ITEMS],
+  stackActiveIdx: 0,
+  quizQuestions: [],
+  quizCurrentIdx: 0,
+  quizScore: 0,
+  quizHintUsed: false,
+  openDetailId: null,
+};
 
-// DOM Elements
-const binderPage = document.getElementById('binder-page');
-const page1 = document.getElementById('page-1');
-const page2 = document.getElementById('page-2');
-const page3 = document.getElementById('page-3');
-const page4 = document.getElementById('page-4');
-const itemsContainerP1 = document.getElementById('items-container-p1');
-const itemsContainerP2 = document.getElementById('items-container-p2');
-const itemsContainerP3 = document.getElementById('items-container-p3');
-const itemsContainerP4 = document.getElementById('items-container-p4');
-const binderRingsContainer = document.getElementById('binder-rings');
-
-const searchInput = document.getElementById('search-input');
-const searchClearBtn = document.getElementById('search-clear-btn');
-const searchDropdown = document.getElementById('search-dropdown');
-
-const prevBtn = document.getElementById('prev-btn');
-const nextBtn = document.getElementById('next-btn');
-
-// Modals
-const detailModal = document.getElementById('detail-modal');
-const modalCloseBtn = document.getElementById('modal-close-btn');
-const modalImg = document.getElementById('modal-item-img');
-const modalCommonName = document.getElementById('modal-common-name');
-const modalOfficialName = document.getElementById('modal-official-name');
-const modalDescription = document.getElementById('modal-description');
-const modalTagsContainer = document.getElementById('modal-tags');
-
-const uploadBtn = document.getElementById('upload-btn');
-const uploadModal = document.getElementById('upload-modal');
-const uploadCloseBtn = document.getElementById('upload-close-btn');
-const uploadForm = document.getElementById('upload-form');
-const uploadDropzone = document.getElementById('upload-dropzone');
-
-const logoButton = document.getElementById('logo-button');
-const suggestBtn = document.getElementById('suggest-btn');
-
-const infoBtn = document.getElementById('info-btn');
-const infoModal = document.getElementById('info-modal');
-const infoCloseBtn = document.getElementById('info-close-btn');
-
-// Quiz Elements
-const pageQuiz = document.getElementById('page-quiz');
-const quizStartScreen = document.getElementById('quiz-start-screen');
-const quizPlayScreen = document.getElementById('quiz-play-screen');
-const quizResultScreen = document.getElementById('quiz-result-screen');
-const quizStartBtn = document.getElementById('quiz-start-btn');
-const quizNextBtn = document.getElementById('quiz-next-btn');
-const quizRestartBtn = document.getElementById('quiz-restart-btn');
-const quizBackBtn = document.getElementById('quiz-back-btn');
-const quizProgressFill = document.getElementById('quiz-progress-fill');
-const quizQuestionNumber = document.getElementById('quiz-question-number');
-const quizScoreBadge = document.getElementById('quiz-score-badge');
-const quizQuestionImg = document.getElementById('quiz-question-img');
-const quizOptionsContainer = document.getElementById('quiz-options');
-const quizFeedbackOverlay = document.getElementById('quiz-feedback');
-const quizFeedbackTitle = document.getElementById('quiz-feedback-title');
-const quizFeedbackDetail = document.getElementById('quiz-feedback-detail');
-
-// Initialize Application
-function init() {
-  assignPagesToItems();
-  layoutItemsGrid();
-  generateRings();
-  renderItems();
-  setupEventListeners();
+// ─────────────────────────────────────────────────────────────
+// 3. HELPERS
+// ─────────────────────────────────────────────────────────────
+function saveFavorites() {
+  localStorage.setItem('favorites', JSON.stringify([...state.favorites]));
 }
 
-// Dynamically assign items to pages based on categories (max 10 per page)
-function assignPagesToItems() {
-  const categories = {
-    kitchen: [],
-    office: [],
-    misc: []
-  };
-  
-  items.forEach(item => {
-    if (categories[item.category]) {
-      categories[item.category].push(item);
-    } else {
-      categories.misc.push(item);
-    }
-  });
-  
-  // Kitchen starts at page 1
-  categories.kitchen.forEach((item, index) => {
-    item.page = 1 + Math.floor(index / 10);
-  });
-  const kitchenPages = Math.ceil(categories.kitchen.length / 10) || 1;
-  
-  // Office starts after kitchen pages
-  const officeStart = 1 + kitchenPages;
-  categories.office.forEach((item, index) => {
-    item.page = officeStart + Math.floor(index / 10);
-  });
-  const officePages = Math.ceil(categories.office.length / 10) || 1;
-  
-  // Misc starts after office pages
-  const miscStart = officeStart + officePages;
-  categories.misc.forEach((item, index) => {
-    item.page = miscStart + Math.floor(index / 10);
-  });
-}
-
-// Position items on pages cleanly inside a grid to prevent initial overlaps
-function layoutItemsGrid() {
-  const pages = {};
-  items.forEach(item => {
-    const p = item.page || 1;
-    if (!pages[p]) pages[p] = [];
-    pages[p].push(item);
-  });
-  
-  // Clean grid layout points (max 10 points)
-  const grid = [
-    { x: 10, y: 12 }, { x: 34, y: 10 }, { x: 58, y: 14 }, { x: 78, y: 12 },
-    { x: 12, y: 42 }, { x: 36, y: 40 }, { x: 58, y: 44 }, { x: 76, y: 40 },
-    { x: 15, y: 72 }, { x: 42, y: 70 }, { x: 68, y: 74 }
-  ];
-  
-  Object.keys(pages).forEach(p => {
-    pages[p].forEach((item, index) => {
-      const pos = grid[index % grid.length];
-      // Keep classic layout positions for original items on Page 1
-      if (item.page === 1 && ["bread_tie", "egg_carton", "pizza_saver", "sushi_grass"].includes(item.id)) {
-        // Keep original predefined position
-      } else {
-        item.pos = { x: pos.x, y: pos.y };
-        item.rotation = (index % 2 === 0 ? 1 : -1) * (8 + (index * 3) % 15);
-        item.size = 120;
-      }
-    });
-  });
-}
-
-// Generate Binder Rings Dynamically
-function generateRings() {
-  const ringCount = 15;
-  binderRingsContainer.innerHTML = '';
-  for (let i = 0; i < ringCount; i++) {
-    const ring = document.createElement('div');
-    ring.className = 'binder-ring';
-    binderRingsContainer.appendChild(ring);
+function getDisplayItems() {
+  let items = ITEMS;
+  if (state.showFavoritesOnly) {
+    items = items.filter(it => state.favorites.has(it.id));
   }
+  if (state.searchQuery) {
+    const q = state.searchQuery.toLowerCase().replace(/^#/, '');
+    items = items.filter(it =>
+      it.name.toLowerCase().includes(q) ||
+      it.official.toLowerCase().includes(q) ||
+      it.tags.some(t => t.toLowerCase().includes(q)) ||
+      it.description.toLowerCase().includes(q)
+    );
+  }
+  return items;
 }
 
-// Render Items on Pages
-function renderItems() {
-  const containers = {
-    1: document.getElementById('items-container-p1'),
-    2: document.getElementById('items-container-p2'),
-    3: document.getElementById('items-container-p3'),
-    4: document.getElementById('items-container-p4')
-  };
-  
-  // Clear all containers
-  Object.values(containers).forEach(container => {
-    if (container) container.innerHTML = '';
-  });
-  
-  items.forEach(item => {
-    const itemEl = document.createElement('div');
-    itemEl.className = 'interactive-item';
-    itemEl.id = `item-${item.id}`;
-    
-    // Style settings for absolute positioning and rotation
-    itemEl.style.left = `${item.pos.x}%`;
-    itemEl.style.top = `${item.pos.y}%`;
-    itemEl.style.width = `${item.size}px`;
-    itemEl.style.transform = `rotate(${item.rotation}deg)`;
-    
-    itemEl.innerHTML = `
-      <img src="${item.image}" alt="${item.name}" class="item-img" draggable="false">
-    `;
-    
-    // Enable dragging and handle click
-    makeItemDraggable(itemEl, item);
-    
-    const targetPage = item.page || 1;
-    const targetContainer = containers[targetPage];
-    if (targetContainer) {
-      targetContainer.appendChild(itemEl);
-    }
-  });
+function showToast(msg, duration = 2400) {
+  const toast = document.getElementById('toast');
+  toast.textContent = msg;
+  toast.classList.remove('hidden');
+  toast.classList.add('show');
+  clearTimeout(showToast._t);
+  showToast._t = setTimeout(() => {
+    toast.classList.remove('show');
+    setTimeout(() => toast.classList.add('hidden'), 350);
+  }, duration);
 }
 
-// Set Background Image Function
-function setBackgroundImage(item) {
-  currentBgItem = item;
-  const bgLayer = document.getElementById('bg-image-layer');
-  if (!bgLayer) return;
-  bgLayer.style.backgroundImage = `url('${item.image}')`;
-  bgLayer.classList.add('active');
+function closeAllModals() {
+  document.querySelectorAll('.modal-overlay').forEach(m => m.classList.add('hidden'));
 }
 
-// Make Items Draggable with Cursor and Save Positions
-function makeItemDraggable(itemEl, item) {
-  let startX, startY;
-  let startLeft, startTop;
-  let hasMoved = false;
-  let isDragging = false;
-  
-  itemEl.addEventListener('mousedown', (e) => {
-    // Left click only
-    if (e.button !== 0) return;
-    
-    // Set background image immediately on mousedown (drag or click)
-    setBackgroundImage(item);
-    
-    e.preventDefault();
-    isDragging = true;
-    hasMoved = false;
-    
-    startX = e.clientX;
-    startY = e.clientY;
-    
-    const parentRect = itemEl.parentElement.getBoundingClientRect();
-    
-    // Convert absolute pixels to container percentage using inline styles to avoid hover transform offset jumps
-    startLeft = parseFloat(itemEl.style.left) || item.pos.x;
-    startTop = parseFloat(itemEl.style.top) || item.pos.y;
-    
-    itemEl.classList.add('dragging');
-    
-    function onMouseMove(e) {
-      if (!isDragging) return;
-      
-      const dx = e.clientX - startX;
-      const dy = e.clientY - startY;
-      
-      if (Math.abs(dx) > 5 || Math.abs(dy) > 5) {
-        hasMoved = true;
-      }
-      
-      const deltaLeft = (dx / parentRect.width) * 100;
-      const deltaTop = (dy / parentRect.height) * 100;
-      
-      let newLeft = startLeft + deltaLeft;
-      let newTop = startTop + deltaTop;
-      
-      // Constrain within binder boundaries
-      newLeft = Math.max(2, Math.min(84, newLeft));
-      newTop = Math.max(2, Math.min(84, newTop));
-      
-      itemEl.style.left = `${newLeft}%`;
-      itemEl.style.top = `${newTop}%`;
-      
-      // Persist coordinate updates in database
-      item.pos.x = newLeft;
-      item.pos.y = newTop;
-    }
-    
-    function onMouseUp(e) {
-      isDragging = false;
-      itemEl.classList.remove('dragging');
-      
-      document.removeEventListener('mousemove', onMouseMove);
-      document.removeEventListener('mouseup', onMouseUp);
-      
-      if (!hasMoved) {
-        // Safe click: open modal
-        openDetailModal(item);
-      }
-    }
-    
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
+// ─────────────────────────────────────────────────────────────
+// 4. LANDING PAGE
+// ─────────────────────────────────────────────────────────────
+function initLanding() {
+  const enterBtn = document.getElementById('enter-btn');
+  const landing  = document.getElementById('landing');
+  const app      = document.getElementById('app');
+
+  enterBtn.addEventListener('click', () => {
+    landing.classList.add('fade-out');
+    setTimeout(() => {
+      landing.classList.add('hidden');
+      app.classList.remove('hidden');
+      renderGrid();
+    }, 600);
   });
 }
 
-// Synchronize Left Category Tabs based on Active Page
-function updateActiveTabForPage(page) {
-  let category = 'kitchen';
-  if (page === 1) category = 'kitchen';
-  else if (page === 2) category = 'office';
-  else if (page === 3 || page === 4) category = 'misc';
-  
-  const tabButtons = document.querySelectorAll('.tab-item');
-  tabButtons.forEach(btn => {
-    const btnCat = btn.getAttribute('data-category');
-    // Don't auto-activate 'all' or 'quiz' tabs based on page nav
-    if (btnCat === 'all' || btnCat === 'quiz') return;
-    if (btnCat === category) {
-      btn.classList.add('active');
-    } else {
-      btn.classList.remove('active');
-    }
+// ─────────────────────────────────────────────────────────────
+// 5. GRID VIEW
+// ─────────────────────────────────────────────────────────────
+function renderGrid() {
+  const container = document.getElementById('grid-container');
+  const noResults = document.getElementById('no-results');
+  const items = getDisplayItems();
+
+  container.innerHTML = '';
+
+  if (items.length === 0) {
+    noResults.classList.remove('hidden');
+    return;
+  }
+  noResults.classList.add('hidden');
+
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'grid-card';
+    card.setAttribute('role', 'listitem');
+    card.style.animationDelay = `${i * 0.04}s`;
+    card.dataset.id = item.id;
+
+    const img = document.createElement('img');
+    img.className = 'grid-card-img';
+    img.src = item.image;
+    img.alt = item.name;
+    img.loading = 'lazy';
+
+    const starBtn = document.createElement('button');
+    starBtn.className = 'card-star-btn' + (state.favorites.has(item.id) ? ' starred' : '');
+    starBtn.innerHTML = '★';
+    starBtn.setAttribute('aria-label', `${item.name} 즐겨찾기`);
+    starBtn.dataset.id = item.id;
+
+    card.appendChild(img);
+    card.appendChild(starBtn);
+
+    // Click card → open detail
+    card.addEventListener('click', (e) => {
+      if (e.target.closest('.card-star-btn')) return;
+      openDetail(item.id);
+    });
+
+    // Star button
+    starBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      toggleFavorite(item.id, starBtn);
+    });
+
+    container.appendChild(card);
   });
-  
-  currentCategory = category;
 }
 
-// Set Page Visibility Helper
-function setPagesVisibility(activePageNum) {
-  const totalPages = 4;
-  if (activePageNum === 'quiz') {
-    for (let i = 1; i <= totalPages; i++) {
-      const pEl = document.getElementById(`page-${i}`);
-      if (pEl) pEl.classList.add('hidden');
-    }
-    pageQuiz.classList.remove('hidden');
+// ─────────────────────────────────────────────────────────────
+// 6. DETAIL MODAL
+// ─────────────────────────────────────────────────────────────
+function openDetail(id) {
+  const item = ITEMS.find(it => it.id === id);
+  if (!item) return;
+  state.openDetailId = id;
+
+  document.getElementById('detail-img').src = item.image;
+  document.getElementById('detail-img').alt = item.name;
+  document.getElementById('detail-name').textContent = item.name;
+  document.getElementById('detail-official').textContent = item.official;
+  document.getElementById('detail-desc').textContent = item.description;
+
+  // Tags
+  const tagsEl = document.getElementById('detail-tags');
+  tagsEl.innerHTML = '';
+  item.tags.forEach(tag => {
+    const chip = document.createElement('button');
+    chip.className = 'tag-chip';
+    chip.textContent = `#${tag}`;
+    chip.addEventListener('click', () => {
+      closeAllModals();
+      state.searchQuery = tag;
+      document.getElementById('search-input').value = tag;
+      filterAndRefresh();
+    });
+    tagsEl.appendChild(chip);
+  });
+
+  // Star state
+  const starBtn = document.getElementById('detail-star-btn');
+  starBtn.classList.toggle('starred', state.favorites.has(id));
+
+  document.getElementById('detail-modal').classList.remove('hidden');
+}
+
+function initDetailModal() {
+  const modal   = document.getElementById('detail-modal');
+  const starBtn = document.getElementById('detail-star-btn');
+  const closeBtn = document.getElementById('detail-close-btn');
+
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+
+  starBtn.addEventListener('click', () => {
+    if (!state.openDetailId) return;
+    toggleFavorite(state.openDetailId, starBtn);
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// 7. FAVORITES
+// ─────────────────────────────────────────────────────────────
+function toggleFavorite(id, btn) {
+  if (state.favorites.has(id)) {
+    state.favorites.delete(id);
+    if (btn) btn.classList.remove('starred');
+    showToast('즐겨찾기에서 제거했습니다.');
   } else {
-    pageQuiz.classList.add('hidden');
-    for (let i = 1; i <= totalPages; i++) {
-      const pEl = document.getElementById(`page-${i}`);
-      if (pEl) {
-        if (i === activePageNum) {
-          pEl.classList.remove('hidden');
-        } else {
-          pEl.classList.add('hidden');
-        }
-      }
+    state.favorites.add(id);
+    if (btn) btn.classList.add('starred');
+    // star pop animation
+    if (btn) {
+      btn.style.transform = 'scale(1.4)';
+      setTimeout(() => { btn.style.transform = ''; }, 250);
+    }
+    showToast('즐겨찾기에 추가했습니다. ⭐');
+  }
+  saveFavorites();
+
+  // Sync detail modal star if open
+  const detailStar = document.getElementById('detail-star-btn');
+  if (detailStar && state.openDetailId === id) {
+    detailStar.classList.toggle('starred', state.favorites.has(id));
+  }
+
+  // Sync grid star buttons
+  document.querySelectorAll(`.card-star-btn[data-id="${id}"]`).forEach(b => {
+    b.classList.toggle('starred', state.favorites.has(id));
+  });
+
+  // If in favorites view, re-render
+  if (state.showFavoritesOnly) renderGrid();
+
+  // Update stack star if active
+  if (state.currentView === 'stack') {
+    const activeItem = state.filteredItems[state.stackActiveIdx];
+    if (activeItem && activeItem.id === id) {
+      document.getElementById('stack-star-btn').classList.toggle('starred', state.favorites.has(id));
     }
   }
 }
 
-// Setup Event Listeners
-function setupEventListeners() {
-  // Search Input Events
-  searchInput.addEventListener('input', handleSearch);
-  searchClearBtn.addEventListener('click', clearSearch);
-  
-  // Close search dropdown on click outside
-  document.addEventListener('click', (e) => {
-    if (!e.target.closest('#search-bar-container')) {
-      searchDropdown.classList.add('hidden');
+// ─────────────────────────────────────────────────────────────
+// 8. SEARCH
+// ─────────────────────────────────────────────────────────────
+function initSearch() {
+  const input     = document.getElementById('search-input');
+  const clearBtn  = document.getElementById('search-clear');
+  const dropdown  = document.getElementById('search-dropdown');
+
+  input.addEventListener('input', () => {
+    const q = input.value.trim();
+    state.searchQuery = q;
+    if (q.length > 0) {
+      showSearchDropdown(q);
+    } else {
+      dropdown.classList.add('hidden');
+    }
+    filterAndRefresh();
+  });
+
+  input.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      input.value = '';
+      state.searchQuery = '';
+      dropdown.classList.add('hidden');
+      filterAndRefresh();
     }
   });
 
-  // Modal Close Events
-  modalCloseBtn.addEventListener('click', closeDetailModal);
-  detailModal.addEventListener('click', (e) => {
-    if (e.target === detailModal) closeDetailModal();
-  });
-  
-  // Upload Modal Events
-  uploadBtn.addEventListener('click', openUploadModal);
-  uploadCloseBtn.addEventListener('click', closeUploadModal);
-  uploadModal.addEventListener('click', (e) => {
-    if (e.target === uploadModal) closeUploadModal();
-  });
-  
-  // Form submission
-  uploadForm.addEventListener('submit', handleUploadSubmit);
-  
-  // Drag and Drop simulation for upload dropzone
-  uploadDropzone.addEventListener('click', () => {
-    alert('이미지 업로드 기능은 현재 프로토타입 시뮬레이션 모드입니다.');
+  clearBtn.addEventListener('click', () => {
+    input.value = '';
+    state.searchQuery = '';
+    dropdown.classList.add('hidden');
+    filterAndRefresh();
   });
 
-  // Navigation Button Events
-  prevBtn.addEventListener('click', () => navigatePage(-1));
-  nextBtn.addEventListener('click', () => navigatePage(1));
-  
-  // Suggest Button (Coming soon page)
-  suggestBtn.addEventListener('click', () => {
-    closeDetailModal();
-    openUploadModal();
+  document.addEventListener('click', (e) => {
+    if (!e.target.closest('.search-area')) {
+      dropdown.classList.add('hidden');
+    }
+  });
+}
+
+function showSearchDropdown(q) {
+  const dropdown = document.getElementById('search-dropdown');
+  const clean = q.toLowerCase().replace(/^#/, '');
+  const matches = ITEMS.filter(it =>
+    it.name.toLowerCase().includes(clean) ||
+    it.official.toLowerCase().includes(clean) ||
+    it.tags.some(t => t.toLowerCase().includes(clean))
+  ).slice(0, 6);
+
+  if (matches.length === 0) {
+    dropdown.classList.add('hidden');
+    return;
+  }
+
+  dropdown.innerHTML = '';
+  matches.forEach(item => {
+    const div = document.createElement('div');
+    div.className = 'dropdown-item';
+    div.innerHTML = `
+      <img src="${item.image}" alt="${item.name}" loading="lazy">
+      <div>
+        <div class="dropdown-item-name">${item.name}</div>
+        <div class="dropdown-item-sub">${item.official}</div>
+      </div>`;
+    div.addEventListener('click', () => {
+      openDetail(item.id);
+      dropdown.classList.add('hidden');
+    });
+    dropdown.appendChild(div);
   });
 
-  // Index Tab Events (Clicking directly jumps to category starting page)
-  const tabButtons = document.querySelectorAll('.tab-item');
-  tabButtons.forEach(tab => {
-    tab.addEventListener('click', (e) => {
-      tabButtons.forEach(btn => btn.classList.remove('active'));
-      tab.classList.add('active');
-      const category = tab.getAttribute('data-category');
-      
-      const prevCategory = currentCategory;
+  dropdown.classList.remove('hidden');
+}
 
-      if (category === 'quiz') {
-        // Hide standard pages and navigation arrows
-        prevBtn.style.display = 'none';
-        nextBtn.style.display = 'none';
-        setPagesVisibility('quiz');
-        showQuizStartScreen();
-      } else if (category === 'all') {
-        // Show all items with flip animation
-        prevBtn.style.display = 'flex';
-        nextBtn.style.display = 'flex';
-        if (prevCategory !== 'all') {
-          const animClass = 'page-flip-prev';
-          binderPage.classList.add(animClass);
-          setTimeout(() => {
-            binderPage.classList.remove(animClass);
-            activateAllTab();
-          }, 300);
-        } else {
-          activateAllTab();
-        }
+function filterAndRefresh() {
+  state.filteredItems = getDisplayItems();
+  if (state.currentView === 'grid') {
+    renderGrid();
+  } else {
+    state.stackActiveIdx = 0;
+    renderStack();
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 9. NAV BUTTONS
+// ─────────────────────────────────────────────────────────────
+function initNav() {
+  // Logo → go home (grid, no filters)
+  document.getElementById('logo-home-btn').addEventListener('click', () => {
+    state.searchQuery = '';
+    state.showFavoritesOnly = false;
+    document.getElementById('search-input').value = '';
+    document.getElementById('search-dropdown').classList.add('hidden');
+    document.getElementById('favorites-bar').classList.add('hidden');
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    setView('grid');
+  });
+
+  document.getElementById('nav-favorites').addEventListener('click', () => {
+    state.showFavoritesOnly = !state.showFavoritesOnly;
+    document.getElementById('favorites-bar').classList.toggle('hidden', !state.showFavoritesOnly);
+    document.getElementById('nav-favorites').classList.toggle('active', state.showFavoritesOnly);
+    filterAndRefresh();
+  });
+
+  document.getElementById('favorites-back-btn').addEventListener('click', () => {
+    state.showFavoritesOnly = false;
+    document.getElementById('favorites-bar').classList.add('hidden');
+    document.getElementById('nav-favorites').classList.remove('active');
+    filterAndRefresh();
+  });
+
+  document.getElementById('nav-view-toggle').addEventListener('click', () => {
+    const newView = state.currentView === 'grid' ? 'stack' : 'grid';
+    setView(newView);
+  });
+
+  document.getElementById('nav-register').addEventListener('click', () => {
+    document.getElementById('register-modal').classList.remove('hidden');
+  });
+
+  document.getElementById('nav-quiz').addEventListener('click', () => {
+    openQuiz();
+  });
+
+  document.getElementById('nav-howto').addEventListener('click', () => {
+    document.getElementById('howto-modal').classList.remove('hidden');
+  });
+}
+
+function setView(view) {
+  state.currentView = view;
+  const gridView   = document.getElementById('grid-view');
+  const stackView  = document.getElementById('stack-view');
+  const toggleBtn  = document.getElementById('nav-view-toggle');
+  const searchArea = document.getElementById('search-area');
+
+  if (view === 'grid') {
+    gridView.classList.remove('hidden');
+    stackView.classList.add('hidden');
+    toggleBtn.textContent = '펼쳐보기';
+    toggleBtn.classList.remove('active');
+    searchArea.style.display = '';
+    renderGrid();
+  } else {
+    gridView.classList.add('hidden');
+    stackView.classList.remove('hidden');
+    toggleBtn.textContent = '모아보기';
+    toggleBtn.classList.add('active');
+    searchArea.style.display = 'none';
+    state.filteredItems = getDisplayItems();
+    state.stackActiveIdx = 0;
+    renderStack();
+  }
+
+  // Right red scrollbar thumb zoom is visible when view is stack
+  const scrollbar = document.getElementById('stack-scrollbar');
+  if (scrollbar) {
+    scrollbar.classList.toggle('hidden', state.currentView !== 'stack');
+  }
+}
+
+// ─────────────────────────────────────────────────────────────
+// 10. STACK VIEW
+// ─────────────────────────────────────────────────────────────
+
+// Zoom state for stack view
+let stackZoom = 1;
+
+function renderStack() {
+  const stage = document.getElementById('stack-stage');
+  const items = state.filteredItems;
+  stage.innerHTML = '';
+
+  const emptyMsg = document.getElementById('stack-empty-msg');
+
+  if (items.length === 0) {
+    if (emptyMsg) emptyMsg.classList.remove('hidden');
+    const line = document.getElementById('stack-connector-line');
+    if (line) {
+      line.removeAttribute('x1');
+      line.removeAttribute('y1');
+      line.removeAttribute('x2');
+      line.removeAttribute('y2');
+    }
+    document.getElementById('stack-item-name').textContent = '';
+    document.getElementById('stack-star-btn').style.display = 'none';
+    return;
+  }
+
+  if (emptyMsg) emptyMsg.classList.add('hidden');
+  document.getElementById('stack-star-btn').style.display = 'flex';
+  const activeIdx = state.stackActiveIdx;
+
+  items.forEach((item, i) => {
+    const card = document.createElement('div');
+    card.className = 'stack-card';
+    card.dataset.idx = i;
+
+    const img = document.createElement('img');
+    img.src = item.image;
+    img.alt = item.name;
+    img.loading = 'lazy';
+    card.appendChild(img);
+
+    // Position relative to active
+    const offset = i - activeIdx;
+    positionStackCard(card, offset, i, activeIdx);
+
+    card.addEventListener('click', () => {
+      const currentOffset = i - state.stackActiveIdx;
+      if (Math.abs(currentOffset) < 0.1) {
+        openDetail(item.id);
       } else {
-        // Restore standard layout with flip animation
-        prevBtn.style.display = 'flex';
-        nextBtn.style.display = 'flex';
-
-        let targetPage = 1;
-        if (category === 'kitchen') targetPage = 1;
-        else if (category === 'office') targetPage = 2;
-        else if (category === 'misc') targetPage = 3;
-
-        // Direction: from 'all' always go forward; otherwise compare pages
-        let direction = null;
-        if (prevCategory === 'all') {
-          direction = 1;
-        }
-
-        filterByCategory(category);
-        currentCategory = category;
-        goToPage(targetPage, direction);
+        state.stackActiveIdx = i;
+        updateStack();
       }
     });
+
+    stage.appendChild(card);
   });
 
-  // Logo Button
-  logoButton.addEventListener('click', () => {
-    clearSearch();
-    prevBtn.style.display = 'flex';
-    nextBtn.style.display = 'flex';
-    activePage = 1;
-    setPagesVisibility(1);
+  updateStackUI();
+}
 
-    filterByCategory('all');
-    document.querySelectorAll('.tab-item').forEach((tab, index) => {
-      if (index === 0) tab.classList.add('active');
-      else tab.classList.remove('active');
+function positionStackCard(card, offset, idx, activeIdx) {
+  // Safe zoom check
+  if (isNaN(stackZoom) || stackZoom <= 0) stackZoom = 1;
+
+  const absOffset = Math.abs(offset);
+  const vw = window.innerWidth || 1024;
+  const vh = window.innerHeight || 768;
+
+  // Card sizing based on zoom
+  const baseW = 280 * stackZoom;
+  const baseH = 240 * stackZoom;
+
+  // Active card position: slightly right of center
+  const activeCX = vw * 0.48;
+  const activeCY = vh * 0.42;
+
+  // 3D step translations - translateX and translateZ are symmetric (1 : -1)
+  const step = 85 * stackZoom;
+  const tx = offset * step;
+  const ty = -offset * (step * 0.65);
+  const tz = -offset * step;
+
+  let scale = stackZoom;
+  let opacity = Math.max(0, 1 - absOffset * 0.08);
+  let zIdx = Math.max(1, Math.round(100 - absOffset * 2));
+
+  // Safe checks
+  if (isNaN(tx) || isNaN(ty) || isNaN(tz) || isNaN(scale)) {
+    card.style.cssText = `display: none;`;
+    return;
+  }
+
+  const rotY = -45;
+
+  card.style.cssText = `
+    width: ${baseW}px;
+    height: ${baseH}px;
+    left: ${activeCX}px;
+    top: ${activeCY}px;
+    transform: translate(-50%, -50%) translate3d(${tx}px, ${ty}px, ${tz}px) rotateY(${rotY}deg) scale(${scale});
+    z-index: ${zIdx};
+    opacity: ${opacity};
+    pointer-events: ${absOffset < 15 ? 'auto' : 'none'};
+  `;
+  card.classList.toggle('is-active', Math.round(activeIdx) === idx);
+}
+
+function updateStack(customActiveIdx) {
+  const cards = document.querySelectorAll('#stack-stage .stack-card');
+  const activeIdx = (customActiveIdx !== undefined) ? customActiveIdx : state.stackActiveIdx;
+  cards.forEach(card => {
+    const i = parseInt(card.dataset.idx);
+    const offset = i - activeIdx;
+    positionStackCard(card, offset, i, activeIdx);
+  });
+  updateStackUI(activeIdx);
+}
+
+function updateStackUI(customActiveIdx) {
+  const items = state.filteredItems;
+  const activeIdx = (customActiveIdx !== undefined) ? customActiveIdx : state.stackActiveIdx;
+  const roundedIdx = Math.round(activeIdx);
+  const activeItem = items[roundedIdx];
+  if (!activeItem) return;
+
+  // 1. Update name label
+  const labelWrap = document.getElementById('stack-label-wrap');
+  const labelName = document.getElementById('stack-item-name');
+  labelName.textContent = `${activeItem.name}.. 뭐였지`;
+
+  // 2. Update star button
+  const starBtn = document.getElementById('stack-star-btn');
+  starBtn.classList.toggle('starred', state.favorites.has(activeItem.id));
+
+  // 3. Dynamic positioning of Star, Label, and Connector Line
+  const vw = window.innerWidth || 1024;
+  const vh = window.innerHeight || 768;
+  const baseW = 280 * stackZoom;
+  const baseH = 240 * stackZoom;
+  const activeCX = vw * 0.48;
+  const activeCY = vh * 0.42;
+
+  // Calculate 2D position for the focused card (using roundedIdx vs activeIdx diff)
+  const val = roundedIdx - activeIdx;
+  
+  // 3D step projections - matching the layout translation and perspective d=1200
+  const step = 85 * stackZoom;
+  const tx = val * step;
+  const ty = -val * (step * 0.65);
+  const tz = -val * step;
+  
+  const d = 1200;
+  const proj = d / (d - tz);
+  
+  let cx = activeCX + tx * proj;
+  let cy = activeCY + ty * proj;
+  let scale = stackZoom * proj;
+
+  if (isNaN(cx) || isNaN(cy) || isNaN(scale)) {
+    cx = activeCX;
+    cy = activeCY;
+    scale = stackZoom;
+  }
+
+  // A. Position Star Button: top-center of the card in 2D space
+  const starX = cx - 10 * scale; 
+  const starY = cy - (baseH * scale) / 2;
+  starBtn.style.left = `${starX}px`;
+  starBtn.style.top = `${starY}px`;
+  starBtn.style.transform = `translate(-50%, -50%) scale(${scale})`;
+
+  // B. Position Label and line
+  // Line start point: bottom center of the active card
+  const startX = cx + 15 * scale;
+  const startY = cy + (baseH * scale) / 2 - 10 * scale;
+
+  // Label end point: lower right
+  const textX = cx + 180 * scale;
+  const textY = cy + 130 * scale;
+
+  // Render SVG Line
+  const line = document.getElementById('stack-connector-line');
+  if (line) {
+    line.setAttribute('x1', startX);
+    line.setAttribute('y1', startY);
+    line.setAttribute('x2', textX);
+    line.setAttribute('y2', textY);
+  }
+
+  // Position label-wrap and rotate it to match the line angle
+  if (labelWrap) {
+    const dx = textX - startX;
+    const dy = textY - startY;
+    const angle = Math.atan2(dy, dx) * 180 / Math.PI;
+
+    labelWrap.style.left = `${textX}px`;
+    labelWrap.style.top = `${textY}px`;
+    labelWrap.style.transform = `rotate(${angle}deg) translateY(-110%)`;
+  }
+
+  // 4. Update scrollbar thumb position (based on zoom)
+  const zoomRatio = (stackZoom - 0.3) / 2.2; // 0.3~2.5 range -> 0~1
+  const thumb = document.getElementById('stack-scroll-thumb');
+  const isDragging = thumb.classList.contains('dragging');
+  if (!isDragging) {
+    thumb.style.top = `${(1 - zoomRatio) * 100}%`;
+  }
+}
+
+function initStackView() {
+  // Mouse wheel navigation through cards
+  let wheelLock = false;
+  document.getElementById('stack-view').addEventListener('wheel', (e) => {
+    e.preventDefault();
+    if (wheelLock) return;
+    wheelLock = true;
+    setTimeout(() => { wheelLock = false; }, 300);
+
+    const items = state.filteredItems;
+    if (e.deltaY > 0) {
+      state.stackActiveIdx = Math.min(state.stackActiveIdx + 1, items.length - 1);
+    } else {
+      state.stackActiveIdx = Math.max(state.stackActiveIdx - 1, 0);
+    }
+    updateStack();
+  }, { passive: false });
+
+  // Keyboard navigation
+  document.addEventListener('keydown', (e) => {
+    if (state.currentView !== 'stack') return;
+    if (document.querySelector('.modal-overlay:not(.hidden)')) return;
+    const items = state.filteredItems;
+    if (e.key === 'ArrowRight' || e.key === 'ArrowDown') {
+      e.preventDefault();
+      state.stackActiveIdx = Math.min(state.stackActiveIdx + 1, items.length - 1);
+      updateStack();
+    } else if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') {
+      e.preventDefault();
+      state.stackActiveIdx = Math.max(state.stackActiveIdx - 1, 0);
+      updateStack();
+    }
+  });
+
+  // Drag navigation on stage
+  const stageEl = document.getElementById('stack-view');
+  const stageContainer = document.getElementById('stack-stage');
+  let dragStartX = 0;
+  let isDragging = false;
+  let dragStartIdx = 0;
+
+  const startDrag = (clientX) => {
+    isDragging = true;
+    dragStartX = clientX;
+    dragStartIdx = state.stackActiveIdx;
+    stageContainer.classList.add('dragging');
+    stageEl.style.cursor = 'grabbing';
+  };
+
+  const moveDrag = (clientX) => {
+    if (!isDragging) return;
+    const dx = clientX - dragStartX;
+    const dragOffset = -dx / 180;
+    let targetIdx = dragStartIdx + dragOffset;
+    const items = state.filteredItems;
+    targetIdx = Math.max(0, Math.min(items.length - 1, targetIdx));
+    updateStack(targetIdx);
+  };
+
+  const endDrag = () => {
+    if (!isDragging) return;
+    isDragging = false;
+    stageContainer.classList.remove('dragging');
+    stageEl.style.cursor = '';
+    updateStack();
+  };
+
+  // Mouse events
+  stageEl.addEventListener('mousedown', (e) => {
+    if (e.target.closest('.stack-scrollbar') || e.target.closest('.stack-star-btn') ||
+        e.target.closest('.stack-search-wrap') || e.target.closest('.nav-btn')) return;
+    startDrag(e.clientX);
+  });
+
+  document.addEventListener('mousemove', (e) => {
+    if (isDragging) {
+      moveDrag(e.clientX);
+    }
+  });
+
+  document.addEventListener('mouseup', () => {
+    if (isDragging) {
+      const cards = document.querySelectorAll('#stack-stage .stack-card');
+      let minAbsOffset = Infinity;
+      let closestIdx = state.stackActiveIdx;
+      cards.forEach(card => {
+        const idx = parseInt(card.dataset.idx);
+        const rect = card.getBoundingClientRect();
+        const cardCX = rect.left + rect.width / 2;
+        const vw = window.innerWidth;
+        const distFromCenter = Math.abs(cardCX - vw * 0.48);
+        if (distFromCenter < minAbsOffset) {
+          minAbsOffset = distFromCenter;
+          closestIdx = idx;
+        }
+      });
+      state.stackActiveIdx = closestIdx;
+      endDrag();
+    }
+  });
+
+  // Touch events for mobile compatibility
+  stageEl.addEventListener('touchstart', (e) => {
+    if (e.target.closest('.stack-scrollbar') || e.target.closest('.stack-star-btn') ||
+        e.target.closest('.stack-search-wrap') || e.target.closest('.nav-btn')) return;
+    startDrag(e.touches[0].clientX);
+  });
+
+  document.addEventListener('touchmove', (e) => {
+    if (isDragging) {
+      moveDrag(e.touches[0].clientX);
+    }
+  }, { passive: true });
+
+  document.addEventListener('touchend', () => {
+    if (isDragging) {
+      const cards = document.querySelectorAll('#stack-stage .stack-card');
+      let minAbsOffset = Infinity;
+      let closestIdx = state.stackActiveIdx;
+      cards.forEach(card => {
+        const idx = parseInt(card.dataset.idx);
+        const rect = card.getBoundingClientRect();
+        const cardCX = rect.left + rect.width / 2;
+        const vw = window.innerWidth;
+        const distFromCenter = Math.abs(cardCX - vw * 0.48);
+        if (distFromCenter < minAbsOffset) {
+          minAbsOffset = distFromCenter;
+          closestIdx = idx;
+        }
+      });
+      state.stackActiveIdx = closestIdx;
+      endDrag();
+    }
+  });
+
+  // Stack star button
+  document.getElementById('stack-star-btn').addEventListener('click', () => {
+    const activeItem = state.filteredItems[state.stackActiveIdx];
+    if (!activeItem) return;
+    toggleFavorite(activeItem.id, document.getElementById('stack-star-btn'));
+  });
+
+  // Scrollbar thumb drag → zoom control (0.3 ~ 2.5)
+  const thumb = document.getElementById('stack-scroll-thumb');
+  const track = thumb.closest('.stack-scroll-track');
+  let zoomDragging = false;
+
+  const startZoomDrag = (e) => {
+    e.preventDefault();
+    e.stopPropagation();
+    zoomDragging = true;
+    thumb.classList.add('dragging');
+  };
+
+  const moveZoomDrag = (clientY) => {
+    if (!zoomDragging) return;
+    const trackRect = track.getBoundingClientRect();
+    const trackHeight = trackRect.height || 100;
+    const ratio = Math.max(0, Math.min(1, (clientY - trackRect.top) / trackHeight));
+    stackZoom = 0.3 + (1 - ratio) * 2.2;
+    if (isNaN(stackZoom)) stackZoom = 1;
+    thumb.style.top = `${ratio * 100}%`;
+    updateStack();
+  };
+
+  const endZoomDrag = () => {
+    if (zoomDragging) {
+      zoomDragging = false;
+      thumb.classList.remove('dragging');
+      updateStack();
+    }
+  };
+
+  // Mouse zoom events
+  thumb.addEventListener('mousedown', startZoomDrag);
+  document.addEventListener('mousemove', (e) => {
+    if (zoomDragging) {
+      moveZoomDrag(e.clientY);
+    }
+  });
+  document.addEventListener('mouseup', endZoomDrag);
+
+  // Touch zoom events
+  thumb.addEventListener('touchstart', startZoomDrag);
+  document.addEventListener('touchmove', (e) => {
+    if (zoomDragging) {
+      moveZoomDrag(e.touches[0].clientY);
+    }
+  }, { passive: false });
+  document.addEventListener('touchend', endZoomDrag);
+}
+
+
+// ─────────────────────────────────────────────────────────────
+// 11. REGISTER MODAL
+// ─────────────────────────────────────────────────────────────
+function initRegisterModal() {
+  const modal    = document.getElementById('register-modal');
+  const closeBtn = document.getElementById('register-close-btn');
+  const dropzone = document.getElementById('upload-dropzone');
+  const fileInput = document.getElementById('upload-file');
+  const submitBtn = document.getElementById('register-submit-btn');
+
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => {
+    if (e.target === modal) modal.classList.add('hidden');
+  });
+
+  // File upload
+  dropzone.addEventListener('click', () => fileInput.click());
+  dropzone.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') fileInput.click(); });
+
+  dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('drag-over'); });
+  dropzone.addEventListener('dragleave', () => dropzone.classList.remove('drag-over'));
+  dropzone.addEventListener('drop', (e) => {
+    e.preventDefault();
+    dropzone.classList.remove('drag-over');
+    const file = e.dataTransfer.files[0];
+    if (file && file.type.startsWith('image/')) handleFilePreview(file);
+  });
+
+  fileInput.addEventListener('change', () => {
+    const file = fileInput.files[0];
+    if (file) handleFilePreview(file);
+  });
+
+  function handleFilePreview(file) {
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const label = document.getElementById('upload-label');
+      const existingPreview = dropzone.querySelector('#upload-preview');
+      if (existingPreview) existingPreview.remove();
+      const preview = document.createElement('img');
+      preview.id = 'upload-preview';
+      preview.src = ev.target.result;
+      dropzone.insertBefore(preview, label);
+      label.textContent = file.name;
+    };
+    reader.readAsDataURL(file);
+  }
+
+  submitBtn.addEventListener('click', () => {
+    const common   = document.getElementById('reg-common').value.trim();
+    const official = document.getElementById('reg-official').value.trim();
+    const desc     = document.getElementById('reg-desc').value.trim();
+    if (!common) {
+      showToast('익숙한 이름을 입력해 주세요.');
+      return;
+    }
+    modal.classList.add('hidden');
+    showToast(`"${common}" 제보가 등록되었습니다! 감사합니다 😊`);
+    document.getElementById('reg-common').value = '';
+    document.getElementById('reg-official').value = '';
+    document.getElementById('reg-desc').value = '';
+    fileInput.value = '';
+    const existingPreview = dropzone.querySelector('#upload-preview');
+    if (existingPreview) existingPreview.remove();
+    document.getElementById('upload-label').textContent = '클릭하여 이미지 파일을 올리거나 드래그해 주세요.';
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// 12. HOW TO USE MODAL
+// ─────────────────────────────────────────────────────────────
+function initHowtoModal() {
+  const modal    = document.getElementById('howto-modal');
+  const closeBtn = document.getElementById('howto-close-btn');
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+}
+
+// ─────────────────────────────────────────────────────────────
+// 13. QUIZ
+// ─────────────────────────────────────────────────────────────
+function openQuiz() {
+  document.getElementById('quiz-modal').classList.remove('hidden');
+  showQuizScreen('start');
+}
+
+function showQuizScreen(name) {
+  document.querySelectorAll('.quiz-screen').forEach(s => {
+    s.classList.remove('active-screen');
+    s.style.display = 'none';
+  });
+  // Remove any feedback overlay
+  document.querySelectorAll('.quiz-feedback-overlay').forEach(el => el.remove());
+
+  const screenId = name === 'start' ? 'quiz-start-screen'
+                 : name === 'play'  ? 'quiz-play-screen'
+                 : 'quiz-result-screen';
+  const screen = document.getElementById(screenId);
+  screen.classList.add('active-screen');
+  screen.style.display = 'flex';
+}
+
+function generateQuizQuestions() {
+  // Pick 10 random unique items
+  const pool = [...ITEMS];
+  for (let i = pool.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [pool[i], pool[j]] = [pool[j], pool[i]];
+  }
+  return pool.slice(0, 10);
+}
+
+function loadQuizQuestion() {
+  const q = state.quizQuestions[state.quizCurrentIdx];
+  if (!q) return;
+
+  state.quizHintUsed = false;
+  document.getElementById('quiz-img').src = q.image;
+  document.getElementById('quiz-img').alt = '???';
+  document.getElementById('quiz-question-marks').textContent = '???';
+  document.getElementById('quiz-input').value = '';
+  document.getElementById('quiz-hint-text').textContent = '';
+  document.getElementById('quiz-hint-text').classList.add('hidden');
+
+  const total = state.quizQuestions.length;
+  const cur   = state.quizCurrentIdx + 1;
+  document.getElementById('quiz-counter').textContent = `${cur} / ${total}`;
+  document.getElementById('quiz-prog-fill').style.width = `${(cur / total) * 100}%`;
+  document.getElementById('quiz-score-live').textContent = `${state.quizScore}개 정답`;
+
+  document.getElementById('quiz-input').focus();
+}
+
+function checkQuizAnswer() {
+  const q      = state.quizQuestions[state.quizCurrentIdx];
+  const raw    = document.getElementById('quiz-input').value.trim();
+  const answer = raw.toLowerCase().replace(/\s+/g, '');
+  const correct = q.name.toLowerCase().replace(/\s+/g, '');
+
+  // Also accept parts of the name or alternative forms
+  const acceptableWords = [
+    correct,
+    q.official.toLowerCase().replace(/\s+/g, ''),
+    ...q.tags.map(t => t.toLowerCase().replace(/\s+/g, ''))
+  ];
+
+  const isCorrect = answer.length > 0 && acceptableWords.some(w => {
+    // Partial match: answer is at least 2 chars and matches a portion
+    return w.includes(answer) || answer.includes(w.substring(0, Math.max(2, Math.floor(w.length * 0.6))));
+  });
+
+  if (isCorrect) state.quizScore++;
+
+  // Show feedback overlay
+  showQuizFeedback(isCorrect, q.name, raw);
+}
+
+function showQuizFeedback(isCorrect, correctAnswer, userAnswer) {
+  const card = document.querySelector('#quiz-play-screen');
+
+  // Remove old feedback
+  const old = card.querySelector('.quiz-feedback-overlay');
+  if (old) old.remove();
+
+  const overlay = document.createElement('div');
+  overlay.className = `quiz-feedback-overlay ${isCorrect ? 'correct' : 'wrong'}`;
+
+  overlay.innerHTML = `
+    <p class="feedback-result-text ${isCorrect ? 'correct' : 'wrong'}">${isCorrect ? '정답! 🎉' : '오답...'}</p>
+    <p class="feedback-answer-text">정답: <strong>${correctAnswer}</strong></p>
+    ${!isCorrect && userAnswer ? `<p class="feedback-answer-text" style="color:var(--color-gray-mid)">내 답: ${userAnswer}</p>` : ''}
+    <button class="quiz-next-btn" id="quiz-next-btn">${
+      state.quizCurrentIdx + 1 >= state.quizQuestions.length ? '결과 보기 →' : '다음 →'
+    }</button>
+  `;
+
+  card.style.position = 'relative';
+  card.appendChild(overlay);
+
+  document.getElementById('quiz-next-btn').addEventListener('click', advanceQuiz);
+}
+
+function advanceQuiz() {
+  state.quizCurrentIdx++;
+  if (state.quizCurrentIdx >= state.quizQuestions.length) {
+    showQuizResult();
+  } else {
+    showQuizScreen('play');
+    loadQuizQuestion();
+  }
+}
+
+function showQuizResult() {
+  showQuizScreen('result');
+  const score = state.quizScore;
+  const total = state.quizQuestions.length;
+  document.getElementById('result-score-text').textContent = `${score} / ${total} 개 맞췄습니다!`;
+
+  let comment = '';
+  if (score === total)        comment = '완벽합니다! 사물 박사 🏆';
+  else if (score >= total*0.8) comment = '훌륭해요! 거의 다 알고 계시네요 😊';
+  else if (score >= total*0.5) comment = '절반 이상! 조금만 더 공부해봐요 📚';
+  else if (score >= total*0.3) comment = '아직 많이 낯선 사물들이 있군요 😅';
+  else                         comment = '괜찮아요! 이 사이트가 도움이 될 거에요 💪';
+  document.getElementById('result-comment-text').textContent = comment;
+
+  launchConfetti();
+}
+
+function initQuizModal() {
+  const modal    = document.getElementById('quiz-modal');
+  const closeBtn = document.getElementById('quiz-close-btn');
+
+  closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+  modal.addEventListener('click', (e) => { if (e.target === modal) modal.classList.add('hidden'); });
+
+  // Start button
+  document.getElementById('quiz-start-btn').addEventListener('click', () => {
+    state.quizQuestions = generateQuizQuestions();
+    state.quizCurrentIdx = 0;
+    state.quizScore = 0;
+    showQuizScreen('play');
+    loadQuizQuestion();
+  });
+
+  // Submit answer
+  document.getElementById('quiz-submit-btn').addEventListener('click', checkQuizAnswer);
+  document.getElementById('quiz-input').addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') checkQuizAnswer();
+  });
+
+  // Hint button
+  document.getElementById('quiz-hint-btn').addEventListener('click', () => {
+    const q = state.quizQuestions[state.quizCurrentIdx];
+    if (!q) return;
+    const hintEl = document.getElementById('quiz-hint-text');
+    hintEl.textContent = `힌트: ${q.hint}`;
+    hintEl.classList.remove('hidden');
+    state.quizHintUsed = true;
+  });
+
+  // Retry
+  document.getElementById('quiz-retry-btn').addEventListener('click', () => {
+    state.quizQuestions = generateQuizQuestions();
+    state.quizCurrentIdx = 0;
+    state.quizScore = 0;
+    showQuizScreen('play');
+    loadQuizQuestion();
+  });
+}
+
+// ─────────────────────────────────────────────────────────────
+// 14. CONFETTI ANIMATION
+// ─────────────────────────────────────────────────────────────
+function launchConfetti() {
+  const canvas = document.getElementById('confetti-canvas');
+  const ctx    = canvas.getContext('2d');
+
+  // Size canvas
+  const parent = canvas.parentElement;
+  canvas.width  = parent.offsetWidth  || 800;
+  canvas.height = parent.offsetHeight || 500;
+
+  const colors = ['#e85d5d','#f6c644','#4ecdc4','#5ab552','#9b59b6','#e67e22','#e91e63','#00bcd4'];
+  const pieces = Array.from({ length: 90 }, () => ({
+    x: Math.random() * canvas.width,
+    y: Math.random() * canvas.height * -0.5,
+    w: 8 + Math.random() * 14,
+    h: 4 + Math.random() * 8,
+    color: colors[Math.floor(Math.random() * colors.length)],
+    rot: Math.random() * Math.PI * 2,
+    dRot: (Math.random() - 0.5) * 0.16,
+    vy: 2.5 + Math.random() * 3.5,
+    vx: (Math.random() - 0.5) * 2.5,
+  }));
+
+  let frame = 0;
+  const maxFrames = 220;
+
+  function draw() {
+    ctx.clearRect(0, 0, canvas.width, canvas.height);
+    pieces.forEach(p => {
+      ctx.save();
+      ctx.translate(p.x, p.y);
+      ctx.rotate(p.rot);
+      ctx.fillStyle = p.color;
+      ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+      ctx.restore();
+
+      p.y   += p.vy;
+      p.x   += p.vx;
+      p.rot += p.dRot;
+      if (p.y > canvas.height + 20) {
+        p.y = -20;
+        p.x = Math.random() * canvas.width;
+      }
     });
-  });
 
-  // Info Modal Events
-  infoBtn.addEventListener('click', () => {
-    infoModal.classList.remove('hidden');
-  });
-  infoCloseBtn.addEventListener('click', () => {
-    infoModal.classList.add('hidden');
-  });
-  infoModal.addEventListener('click', (e) => {
-    if (e.target === infoModal) infoModal.classList.add('hidden');
-  });
+    frame++;
+    if (frame < maxFrames) requestAnimationFrame(draw);
+    else ctx.clearRect(0, 0, canvas.width, canvas.height);
+  }
 
-  // ESC key to close modals
+  draw();
+}
+
+// ─────────────────────────────────────────────────────────────
+// 15. KEYBOARD SHORTCUT — ESC closes modals
+// ─────────────────────────────────────────────────────────────
+function initKeyboardShortcuts() {
   document.addEventListener('keydown', (e) => {
     if (e.key === 'Escape') {
-      closeDetailModal();
-      closeUploadModal();
-      infoModal.classList.add('hidden');
-    }
-  });
-
-  // Alternate designs list click-and-drag scroll
-  const altList = document.getElementById('modal-alt-list');
-  let isDown = false;
-  let startX;
-  let scrollLeft;
-
-  altList.addEventListener('mousedown', (e) => {
-    isDown = true;
-    altList.classList.add('active-drag');
-    startX = e.pageX - altList.offsetLeft;
-    scrollLeft = altList.scrollLeft;
-  });
-  altList.addEventListener('mouseleave', () => {
-    isDown = false;
-    altList.classList.remove('active-drag');
-  });
-  altList.addEventListener('mouseup', () => {
-    isDown = false;
-    altList.classList.remove('active-drag');
-  });
-  altList.addEventListener('mousemove', (e) => {
-    if (!isDown) return;
-    e.preventDefault();
-    const x = e.pageX - altList.offsetLeft;
-    const walk = (x - startX) * 2.5; // Drag speed multiplier
-    altList.scrollLeft = scrollLeft - walk;
-  });
-
-  // Quiz Control Button Events
-  quizStartBtn.addEventListener('click', startQuiz);
-  quizNextBtn.addEventListener('click', nextQuestion);
-  quizRestartBtn.addEventListener('click', startQuiz);
-  quizBackBtn.addEventListener('click', () => {
-    logoButton.click();
-  });
-}
-
-// Open Detail Modal with Item Info
-function openDetailModal(item) {
-  const modalImgContainer = document.querySelector('.modal-img-container');
-  modalImg.src = item.image;
-  modalImg.alt = item.name;
-  modalCommonName.textContent = item.officialName;
-  modalOfficialName.textContent = item.name;
-  modalDescription.textContent = item.description;
-  
-  // Build tags
-  modalTagsContainer.innerHTML = '';
-  item.tags.forEach(tag => {
-    const tagEl = document.createElement('span');
-    tagEl.className = 'tag-badge';
-    tagEl.textContent = `#${tag}`;
-    tagEl.addEventListener('click', () => {
-      closeDetailModal();
-      searchInput.value = tag;
-      handleSearch();
-    });
-    modalTagsContainer.appendChild(tagEl);
-  });
-  
-  // Build Alternate Designs ("다른 모양들")
-  const modalAltSection = document.getElementById('modal-alt-designs-section');
-  const modalAltList = document.getElementById('modal-alt-list');
-  
-  if (item.otherDesigns && item.otherDesigns.length > 1) {
-    modalAltList.innerHTML = '';
-    
-    item.otherDesigns.forEach((design, index) => {
-      const altItem = document.createElement('div');
-      altItem.className = 'modal-alt-item';
-      if (index === 0) altItem.classList.add('active');
-      
-      altItem.innerHTML = `
-        <img src="${design.image}" alt="${design.officialName}" draggable="false">
-      `;
-      
-      altItem.addEventListener('click', () => {
-        if (altItem.classList.contains('active')) return;
-        
-        // Update active class
-        const activeItems = modalAltList.querySelectorAll('.modal-alt-item');
-        activeItems.forEach(el => el.classList.remove('active'));
-        altItem.classList.add('active');
-        
-        // Swap image and content with a smooth transition
-        modalImgContainer.style.opacity = '0';
-        setTimeout(() => {
-          modalImg.src = design.image;
-          modalImg.alt = design.officialName;
-          modalCommonName.textContent = design.officialName;
-          modalOfficialName.textContent = item.name;
-          modalDescription.textContent = design.description;
-          modalImgContainer.style.opacity = '1';
-        }, 150);
-      });
-      
-      modalAltList.appendChild(altItem);
-    });
-    
-    modalAltSection.classList.remove('hidden');
-  } else {
-    modalAltSection.classList.add('hidden');
-  }
-  
-  // Reset modal scroll to top when opening
-  const modalCard = document.querySelector('.modal-card');
-  if (modalCard) modalCard.scrollTop = 0;
-  
-  detailModal.classList.remove('hidden');
-}
-
-function closeDetailModal() {
-  detailModal.classList.add('hidden');
-}
-
-// Upload Modal Functions
-function openUploadModal() {
-  uploadModal.classList.remove('hidden');
-}
-
-// Close Upload Modal
-function closeUploadModal() {
-  uploadModal.classList.add('hidden');
-  uploadForm.reset();
-}
-
-// Handle Upload Submit
-function handleUploadSubmit(e) {
-  e.preventDefault();
-  alert('제보해 주셔서 감사합니다! 검토 후 도감에 등록하겠습니다.');
-  closeUploadModal();
-}
-
-// Search Filtering Logic
-function handleSearch() {
-  const query = searchInput.value.trim().toLowerCase();
-  
-  if (query === '') {
-    clearSearch();
-    return;
-  }
-  
-  isSearching = true;
-  searchClearBtn.classList.add('visible');
-  
-  const matchedItems = [];
-  
-  items.forEach(item => {
-    const isMatch = 
-      item.name.toLowerCase().includes(query) ||
-      item.officialName.toLowerCase().includes(query) ||
-      item.description.toLowerCase().includes(query) ||
-      item.tags.some(tag => tag.toLowerCase().includes(query));
-      
-    const itemEl = document.getElementById(`item-${item.id}`);
-    if (itemEl) {
-      if (isMatch) {
-        itemEl.classList.remove('dimmed');
-        itemEl.classList.add('highlighted');
-        matchedItems.push(item);
-      } else {
-        itemEl.classList.remove('highlighted');
-        itemEl.classList.add('dimmed');
-      }
-    }
-  });
-
-  // Render dropdown suggestions
-  renderSearchDropdown(matchedItems);
-  
-  // If we search, make sure we show the page containing the first matched item
-  if (matchedItems.length > 0) {
-    const firstMatch = matchedItems[0];
-    const targetPage = firstMatch.page || 1;
-    if (activePage !== targetPage) {
-      goToPage(targetPage);
-    }
-  }
-}
-
-// Clear Search
-function clearSearch() {
-  searchInput.value = '';
-  searchClearBtn.classList.remove('visible');
-  searchDropdown.classList.add('hidden');
-  isSearching = false;
-  
-  // Restore all items opacity and positions
-  items.forEach(item => {
-    const itemEl = document.getElementById(`item-${item.id}`);
-    if (itemEl) {
-      itemEl.classList.remove('dimmed', 'highlighted');
-    }
-  });
-  
-  // Re-apply current category filter if active
-  if (currentCategory !== 'all') {
-    filterByCategory(currentCategory);
-  }
-}
-
-// Render Search Dropdown
-function renderSearchDropdown(matchedItems) {
-  if (matchedItems.length === 0) {
-    searchDropdown.innerHTML = '<div style="padding: 10px 20px; font-size: 13px; color: var(--text-muted);">검색 결과가 없습니다.</div>';
-  } else {
-    searchDropdown.innerHTML = '';
-    matchedItems.forEach(item => {
-      const dropdownItem = document.createElement('div');
-      dropdownItem.className = 'search-item';
-      dropdownItem.innerHTML = `
-        <span class="search-item-title">${item.name}</span>
-        <span class="search-item-official">${item.officialName}</span>
-      `;
-      dropdownItem.addEventListener('click', () => {
-        openDetailModal(item);
-        searchInput.value = item.name;
-        searchDropdown.classList.add('hidden');
-        
-        // Navigate to the item's page
-        const targetPage = item.page || 1;
-        if (activePage !== targetPage) {
-          goToPage(targetPage);
-        }
-
-        // Highlight only this item
-        items.forEach(it => {
-          const itemEl = document.getElementById(`item-${it.id}`);
-          if (itemEl) {
-            if (it.id === item.id) {
-              itemEl.classList.remove('dimmed');
-              itemEl.classList.add('highlighted');
-            } else {
-              itemEl.classList.remove('highlighted');
-              itemEl.classList.add('dimmed');
-            }
-          }
-        });
-      });
-      searchDropdown.appendChild(dropdownItem);
-    });
-  }
-  searchDropdown.classList.remove('hidden');
-}
-
-// Category Filter
-function filterByCategory(category) {
-  currentCategory = category;
-  
-  // Reset search
-  if (isSearching) {
-    clearSearch();
-  }
-  
-  items.forEach(item => {
-    const itemEl = document.getElementById(`item-${item.id}`);
-    if (itemEl) {
-      itemEl.classList.remove('highlighted');
-      if (category === 'all' || item.category === category) {
-        itemEl.classList.remove('dimmed');
-      } else {
-        itemEl.classList.add('dimmed');
-      }
+      const openModal = document.querySelector('.modal-overlay:not(.hidden)');
+      if (openModal) openModal.classList.add('hidden');
     }
   });
 }
 
-// Activate the red "all" tab state
-function activateAllTab() {
-  currentCategory = 'all';
-  filterByCategory('all');
-  document.querySelectorAll('.tab-item').forEach(btn => btn.classList.remove('active'));
-  const allTab = document.querySelector('.tab-item[data-category="all"]');
-  if (allTab) allTab.classList.add('active');
-  // Go to page 1 so items are visible
-  if (activePage !== 1) {
-    const currentPageEl = document.getElementById(`page-${activePage}`);
-    const page1El = document.getElementById('page-1');
-    if (currentPageEl) currentPageEl.classList.add('hidden');
-    if (page1El) page1El.classList.remove('hidden');
-    activePage = 1;
-  }
-}
+// ─────────────────────────────────────────────────────────────
+// 16. INIT
+// ─────────────────────────────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+  initLanding();
+  initDetailModal();
+  initSearch();
+  initNav();
+  initStackView();
+  initRegisterModal();
+  initHowtoModal();
+  initQuizModal();
+  initKeyboardShortcuts();
 
-// Page Navigation with flip animation
-// Cycle: all(red) → page1 → page2 → page3 → page4 → all(red) → ...
-function navigatePage(direction) {
-  const totalPages = 4;
-
-  if (currentCategory === 'all') {
-    // From 'all': next → page 1, prev → page 4
-    if (direction === 1) {
-      filterByCategory('kitchen');
-      goToPage(1);
-    } else {
-      filterByCategory('misc');
-      goToPage(totalPages);
+  // Redraw stack view responsively on window resize
+  window.addEventListener('resize', () => {
+    if (state.currentView === 'stack') {
+      updateStack();
     }
-    return;
-  }
-
-  let targetPage = activePage + direction;
-
-  if (targetPage < 1 || targetPage > totalPages) {
-    // Out of bounds → activate the red "all" tab
-    activateAllTab();
-    return;
-  }
-
-  goToPage(targetPage, direction);
-}
-
-// Go to page with flip animation
-function goToPage(targetPage, direction = null) {
-  if (targetPage === activePage) return;
-  
-  const currentPageEl = document.getElementById(`page-${activePage}`);
-  const targetPageEl = document.getElementById(`page-${targetPage}`);
-  
-  if (!currentPageEl || !targetPageEl) return;
-  
-  const actualDirection = direction !== null ? direction : (targetPage > activePage ? 1 : -1);
-  const animationClass = actualDirection > 0 ? 'page-flip-next' : 'page-flip-prev';
-  binderPage.classList.add(animationClass);
-  
-  setTimeout(() => {
-    currentPageEl.classList.add('hidden');
-    targetPageEl.classList.remove('hidden');
-    binderPage.classList.remove(animationClass);
-    activePage = targetPage;
-    
-    // Automatically update the active category tab based on the new page
-    updateActiveTabForPage(activePage);
-  }, 300);
-}
-
-// Run application when DOM is fully loaded
-document.addEventListener('DOMContentLoaded', init);
-
-// Quiz Game State Variables
-let quizQuestions = [];
-let currentQuizIdx = 0;
-let quizScore = 0;
-
-// Show Quiz Start Screen
-function showQuizStartScreen() {
-  quizStartScreen.classList.remove('hidden');
-  quizPlayScreen.classList.add('hidden');
-  quizResultScreen.classList.add('hidden');
-  quizFeedbackOverlay.classList.add('hidden');
-}
-
-// Start Quiz Game
-function startQuiz() {
-  // Shuffle all items and pick 5 questions
-  const shuffledItems = [...items].sort(() => 0.5 - Math.random());
-  quizQuestions = shuffledItems.slice(0, 5);
-  
-  currentQuizIdx = 0;
-  quizScore = 0;
-  
-  quizStartScreen.classList.add('hidden');
-  quizPlayScreen.classList.remove('hidden');
-  quizResultScreen.classList.add('hidden');
-  quizFeedbackOverlay.classList.add('hidden');
-  
-  showQuizQuestion();
-}
-
-// Render current quiz question
-function showQuizQuestion() {
-  const currentItem = quizQuestions[currentQuizIdx];
-  
-  // Progress Bar
-  const progressPercent = ((currentQuizIdx) / 5) * 100;
-  quizProgressFill.style.width = `${progressPercent}%`;
-  
-  // Header texts
-  quizQuestionNumber.textContent = `문제 ${currentQuizIdx + 1} / 5`;
-  quizScoreBadge.textContent = `맞춘 개수: ${quizScore}`;
-  
-  // Question Image
-  quizQuestionImg.src = currentItem.image;
-  quizQuestionImg.alt = currentItem.officialName;
-  
-  // Options Choices Generation (1 correct + 3 incorrect)
-  const correctOption = currentItem.name;
-  const incorrectChoices = items
-    .filter(it => it.id !== currentItem.id)
-    .map(it => it.name);
-  
-  // Shuffle incorrect choices and pick 3
-  const shuffledIncorrect = incorrectChoices.sort(() => 0.5 - Math.random()).slice(0, 3);
-  
-  // Mix correct and incorrect and shuffle
-  const allChoices = [correctOption, ...shuffledIncorrect].sort(() => 0.5 - Math.random());
-  
-  // Populate buttons
-  quizOptionsContainer.innerHTML = '';
-  allChoices.forEach(choice => {
-    const btn = document.createElement('button');
-    btn.className = 'quiz-option-btn';
-    btn.textContent = choice;
-    btn.addEventListener('click', () => {
-      evaluateAnswer(choice === correctOption, currentItem);
-    });
-    quizOptionsContainer.appendChild(btn);
   });
-}
-
-// Evaluate selected answer and show feedback
-function evaluateAnswer(isCorrect, item) {
-  // Disable option buttons
-  const buttons = quizOptionsContainer.querySelectorAll('.quiz-option-btn');
-  buttons.forEach(btn => btn.disabled = true);
-  
-  if (isCorrect) {
-    quizScore++;
-    quizFeedbackTitle.textContent = "정답입니다! 🎉";
-    quizFeedbackTitle.className = "correct";
-  } else {
-    quizFeedbackTitle.textContent = "아쉽네요! 😢";
-    quizFeedbackTitle.className = "incorrect";
-  }
-  
-  quizFeedbackDetail.innerHTML = `
-    <strong>우리가 부르는 이름:</strong> ${item.name}<br>
-    <strong>진짜 공식 명칭:</strong> ${item.officialName}<br><br>
-    <span style="font-size: 13.5px;">${item.description.substring(0, 90)}...</span>
-  `;
-  
-  quizFeedbackOverlay.classList.remove('hidden');
-}
-
-// Go to next question or show final score
-function nextQuestion() {
-  quizFeedbackOverlay.classList.add('hidden');
-  currentQuizIdx++;
-  
-  if (currentQuizIdx < 5) {
-    showQuizQuestion();
-  } else {
-    // Fill the progress bar to 100%
-    quizProgressFill.style.width = '100%';
-    showQuizResults();
-  }
-}
-
-// Display finalized score and comment
-function showQuizResults() {
-  quizPlayScreen.classList.add('hidden');
-  quizResultScreen.classList.remove('hidden');
-  
-  quizFinalScore.textContent = `${quizScore} / 5`;
-  
-  let comment = "";
-  switch(quizScore) {
-    case 5:
-      comment = "우와, 혹시 사물 사전 개발자이신가요?! 사물 이름의 완전한 신! 👑";
-      break;
-    case 4:
-    case 3:
-      comment = "그 뭐냐 그거! 일상 사물들의 진짜 이름들을 대단히 잘 알고 계시는군요! 👍";
-      break;
-    case 2:
-    case 1:
-      comment = "도감 사전을 더 꼼꼼히 탐색해 보세요! 조금만 더 하면 다 맞출 수 있습니다! 📖";
-      break;
-    case 0:
-      comment = "그 뭐냐 그거... 정말 아무 이름도 기억나지 않으시는군요! 😂 다시 한번 도전해 볼까요?";
-      break;
-  }
-  
-  quizResultComment.textContent = comment;
-}
+});
